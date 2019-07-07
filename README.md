@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # frontend
 
 ## Project setup
@@ -27,3 +28,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# app_project
+>>>>>>> d07e2a405441d5dd716199738ecff353f272128e
