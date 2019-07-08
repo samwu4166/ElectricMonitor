@@ -1,0 +1,19 @@
+[
+  {
+    'repeat(0, 10)': {
+    tagname : '{{lorem(1, "words")}}',
+    site : '{{lorem(1,"words")}}',
+    rs_v : '{{floating(0,30,2)}}',
+    st_v : '{{floating(0,30,2)}}',
+    tr_v : '{{floating(0,30,2)}}',
+    r_a : '{{floating(0,30,2)}}',
+    s_a : '{{floating(0,30,2)}}',
+    t_a : '{{floating(0,30,2)}}',
+    kwh : '{{floating(0,30,2)}}',
+    pf : '{{floating(1,10,2)}}',
+    kw : '{{floating(0,30,2)}}',
+    is_on : '{{bool()}}',
+    datetime : '{{date(new Date(2019,7,6),new Date(),"YYYY/MM/dd HH:mm:ss")}}'
+  	}
+  }
+]

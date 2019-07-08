@@ -34,6 +34,6 @@ html, body{
 }
 #router {
   margin-top:3.5rem;
-  padding-top:calc((100vh - 11.5rem)/2);
+  /*padding-top:calc((100vh - 11.5rem)/2);     垂直置中*/
 }
 </style>
