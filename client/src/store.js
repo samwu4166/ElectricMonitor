@@ -6,18 +6,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    data: []
+    data: [],
+    timeout:0
   },
   mutations: {
     SET_DATA (state, data){
       state.data = data;
+    },
+    SET_TIMEOUT(state, timeout){
+      state.timeout = timeout;
     }
   },
   actions: {
     getData({ commit }){
-      apiDataRequest()
+      return apiDataRequest()
       .then(res => {
-        console.log(res.data);
+        //console.log(res.data);
         commit('SET_DATA', res.data);
       })
       .catch(err => {
