@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 app.use('/',indexRouter);
-app.use('/apis', apiRouter);
+app.use('/api', apiRouter);
 
 
 
