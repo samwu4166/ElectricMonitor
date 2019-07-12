@@ -5,7 +5,6 @@ var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var apiRouter = require('./api/apis');
-var indexRouter = require('./routes/index');
 
 var app = express();
 var port = 8080;
@@ -17,6 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 // visit static resource
 //app.use(express.static(path.resolve(__dirname, '../dist')));
 // visit spa
