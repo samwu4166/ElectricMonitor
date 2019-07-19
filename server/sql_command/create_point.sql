@@ -1,0 +1,1 @@
+create table point_info (tagname varchar(10),site varchar(10),rs_v varchar(10),st_v varchar(10),tr_v varchar(10),r_a varchar(10),s_a varchar(10),t_a varchar(10),kwh varchar(10),pf varchar(10),kw varchar(10),is_on varchar(10),datetime datetime)
