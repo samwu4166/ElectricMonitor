@@ -40,7 +40,6 @@ router.get('/mssql', function(req, res, next) {
     columns.forEach(function(column) {
       tjson[column['metadata']['colName']] = column['value'];
     });
-    tjson['datetime'] = moment(tjson['datetime']).format('YYYY-MM-DDTHH:mm:ss');
     data_arr.push(tjson);
   });
   request.on('doneInProc', function (rowCount, more, rows) {  
