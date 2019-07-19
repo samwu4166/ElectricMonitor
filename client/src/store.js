@@ -1,13 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {apiDataRequest} from "./api.js"
+import {apiDataRequest, apiLoginAuth} from "./api.js"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     data: [],
-    timeout:0
+    timeout: 0,
+    //login info session
+    loginState: {
+      loginIn: false,
+      userInfo: {
+        userName: "",
+        password: "",
+        token: ""
+      }
+    }
+  },
+  getters: {
+    getLoginState: state => {
+      return state.loginState;
+    }
   },
   mutations: {
     SET_DATA (state, data){
@@ -15,6 +29,9 @@ export default new Vuex.Store({
     },
     SET_TIMEOUT(state, timeout){
       state.timeout = timeout;
+    },
+    SET_LOGINSTATE(state, loginState) {
+      state.loginState = loginState;
     }
   },
   actions: {
@@ -27,6 +44,15 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err);
       });
+    },
+    LoginAuth({ commit }) {
+      return apiLoginAuth()
+        .then(res => {
+          commit('SET_LOGINSTATE', res.loginState);
+        })
+        .catch(err => {
+          console.log(err);
+      })
     }
   }
 })

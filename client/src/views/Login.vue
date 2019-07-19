@@ -24,7 +24,8 @@
 export default {
     methods: {
         login () {
-            this.$router.push('home')
+            this.$cookies.set('session',{})
+            this.$router.push('/home')
         }
     }
 }
