@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
+import Logout from './views/Logout.vue'
 import About from './views/About.vue'
+import Register from './views/Register.vue'
 
 Vue.use(Router)
 
@@ -10,7 +12,23 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: {
+        requiresVisitor: true
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      meta: {
+        requiresVisitor: true
+      }
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
     },
     {
       path: '/home',
@@ -18,7 +36,10 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (home.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
+      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/about',
@@ -35,5 +56,7 @@ export default new Router({
       name: 'not_found',
       component: About
     }
-  ]
+  ],
+  mode: 'history'
+
 })
