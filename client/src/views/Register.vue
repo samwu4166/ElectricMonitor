@@ -1,6 +1,6 @@
 <template>
-    <div class=login>
-        <b-form action="#"  @submit.prevent="login">
+    <div class=register>
+        <b-form action="#"  @submit.prevent="register">
         <b-container fluid>
             <b-row class="mb-2 justify-content-center" no-gutters>
                 <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
@@ -9,7 +9,12 @@
             </b-row>
             <b-row class="mb-2 justify-content-center" no-gutters>
                 <b-col col cols="10" xl="3" lg="4" md="5" sm="6">
-                    <b-form-input class="rounded-0" placeholder="Password" type="password" v-model="password"></b-form-input>
+                    <b-form-input class="rounded-0" placeholder="new password" type="password" v-model="password"></b-form-input>
+                </b-col>
+            </b-row>
+            <b-row class="mb-2 justify-content-center" no-gutters>
+                <b-col col cols="10" xl="3" lg="4" md="5" sm="6">
+                    <b-form-input class="rounded-0" placeholder="enter password again" type="password" v-model="password2"></b-form-input>
                 </b-col>
             </b-row>
             <b-row class="justify-content-center" no-gutters>
@@ -24,28 +29,29 @@
 
 <script>
 export default {
-    name: 'login',
+    name: 'register',
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            password2: ''
         }
     },
     methods: {
-        login () {
-            this.$store.dispatch('retrieveToken',{
+        register () {
+            /*this.$store.dispatch('retrieveToken',{
                 username: this.username,
                 password: this.password
             })
             .then(response => {
                 this.$router.push('/home')
-            })
+            })*/
         }
     }
 }
 </script>
 <style>
-    .login {
+    .register {
         width:100%;
     }
 </style>

@@ -29,7 +29,7 @@ export default {
         var props = Object.keys(da).slice(3,12)
         var len = props.length
         for(var i = 0; i < len; i++){
-          if(da[props[i]] > 500){
+          if(da[props[i]] > 15){
             da['_cellVariants'][props[i]] = 'danger'
           }
         }
