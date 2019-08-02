@@ -1,0 +1,1 @@
+create table user_info (uuid varchar(256) Not null UNIQUE,account varchar(256) Not null UNIQUE,password varchar(256) Not null );
