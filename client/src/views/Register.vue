@@ -4,6 +4,11 @@
         <b-container fluid>
             <b-row class="mb-2 justify-content-center" no-gutters>
                 <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
+                    <b-form-input class="rounded-0" placeholder="輸入您的赤兔碼" v-model="verifyToken"></b-form-input>
+                </b-col>
+            </b-row>
+            <b-row class="mb-2 justify-content-center" no-gutters>
+                <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
                     <b-form-input class="rounded-0" placeholder="Account" v-model="username"></b-form-input>
                 </b-col>
             </b-row>
@@ -32,13 +37,22 @@ export default {
     name: 'register',
     data() {
         return {
-            username: '',
-            password: '',
-            password2: ''
+            verifyToken: null,
+            username: null,
+            password: null,
+            password2: null
         }
     },
     methods: {
         register () {
+            this.$store.dispatch('register', {
+                username: this.username,
+                password: this.password,
+                verifyToken: this.verifyToken
+            })
+            .then(response => {
+                this.$router.push('/login')
+            })
             /*this.$store.dispatch('retrieveToken',{
                 username: this.username,
                 password: this.password

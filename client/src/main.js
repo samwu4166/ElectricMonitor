@@ -9,11 +9,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueCookies from 'vue-cookies';
 import VueRouter from 'vue-router';
 
-Vue.use(BootstrapVue);
-Vue.use(VueCookies);
-Vue.use(VueRouter);
-Vue.config.productionTip = false;
-
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)){
     if(!store.getters.loggedIn){
@@ -26,7 +21,18 @@ router.beforeEach((to, from, next) => {
     }
   }
   else if (to.matched.some(record => record.meta.requiresVisitor)) {
-    if(store.getters.loggedIn){
+    if (store.getters.loggedIn) {
+      next({
+        path: '/home'
+      })
+    }
+    else {
+      next()
+    }
+  }
+  else if (to.matched.some(record => record.meta.requiresPermission)) {
+    console.log(store.getters.getPermission)
+    if (store.getters.getPermission !== "0") {
       next({
         path: '/home'
       })
@@ -39,6 +45,11 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+Vue.use(BootstrapVue);
+Vue.use(VueCookies);
+Vue.use(VueRouter);
+Vue.config.productionTip = false;
 
 new Vue({
   router,

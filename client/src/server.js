@@ -26,6 +26,32 @@ function verifyToken(token){
 function isAuthenticated({username, password}){
     return userdb.users.findIndex(user => user.username === username && user.password === password) !== -1
 }
+function isRegistered({ username }) {
+    return userdb.users.findIndex(user => user.username === username) !== -1
+}
+function getPermission({ username }) {
+    var index = userdb.users.findIndex(user => user.username === username)
+    console.log(index)
+    return userdb.users[index].permission
+}
+
+server.post('/auth/register', (req, res) => {
+    const username = req.body.username
+    const password = req.body.password
+    const verifyToken = req.body.verifyToken
+    if (isRegistered({ username }) === true) {
+        const status = 401
+        const message = "already has account"
+        res.status(status).json({ status, message })
+        return
+    }
+    userdb.users.push({
+        username: username,
+        password: password
+    })
+    fs.writeFileSync('./data/users.json',JSON.stringify(userdb))
+    res.status(200).json({status})
+})
 
 server.post('/auth/login', (req, res) =>{
     const username = req.body.username
@@ -38,7 +64,7 @@ server.post('/auth/login', (req, res) =>{
         return
     }
     const access_token = createToken({username, password})
-    res.status(200).json({access_token})
+    res.status(200).json({ access_token, auth: getPermission({ username })})
 })
 
 server.use((req, res, next) => {

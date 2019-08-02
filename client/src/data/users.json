@@ -1,16 +1,1 @@
-{
-    "users": [
-        {
-            "username": "jason",
-            "password" :"secret"
-        },
-        {
-            "username": "sexy",
-            "password" :"secret123"
-        },
-        {
-            "username": "larry",
-            "password" :"cl3284"
-        }
-    ]
-}
+{"users":[{"username":"jason","password":"secret", "permission":"1"},{"username":"sexy","password":"secret123", "permission":"1"},{"username":"larry","password":"cl3284", "permission":"1"},{"username":"writer","password":"cp3gj94", "permission":"0"},{"username":"sam","password":"cp32j03", "permission":"1"}]}

@@ -4,6 +4,7 @@ import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import About from './views/About.vue'
 import Register from './views/Register.vue'
+import BackendManagement from './views/BackendManagement.vue'
 
 Vue.use(Router)
 
@@ -23,6 +24,14 @@ export default new Router({
       component: Register,
       meta: {
         requiresVisitor: true
+      }
+    },
+    {
+      path: '/backendManagement',
+      name: 'backendManagement',
+      component: BackendManagement,
+      meta: {
+        requiresPermission: true
       }
     },
     {
@@ -49,7 +58,10 @@ export default new Router({
     {
       path: '/',
       name: 'root',
-      component: Login
+      component: Login,
+      meta: {
+        requiresVisitor: true
+      }
     },
     {
       path: '*',

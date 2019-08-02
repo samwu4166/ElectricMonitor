@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
-import {apiDataRequest, apiLoginAuth, apiLogout} from "./api.js"
+import {apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout} from "./api.js"
 import Axios from 'axios';
 
 Vue.use(Vuex)
@@ -14,8 +14,13 @@ export default new Vuex.Store({
     user:{
       username: null,
       password: null,
-      permission: null,
+      permission: VueCookies.get('permission') || null,
       access_token: VueCookies.get('access_token') || null
+    },
+    registerInfo: {
+      verifyToken: null,
+      username: null,
+      password: null
     }
   },
   getters: {
@@ -27,6 +32,12 @@ export default new Vuex.Store({
     },
     getAccessToken(state){
       return state.access_token;
+    },
+    getRegisterInfo: state => {
+      return state.registerInfo;
+    },
+    getPermission: state => {
+      return state.user.permission;
     }
   },
   mutations: {
@@ -43,11 +54,33 @@ export default new Vuex.Store({
     SET_ACCESS_TOKEN(state, access_token){
       state.user.access_token = access_token;
     },
+    SET_USER_PERMISSION(state, permission) {
+      state.user.permission = permission;
+    },
     destroyAccessToken(state){
       state.user.access_token = null;
+    },
+    SET_REGISTERINFO(state, {username, password, verifyToken}) {
+      state.registerInfo.username = username
+      state.registerInfo.password = password
+      state.registerInfo.verifyToken = verifyToken
     }
   },
   actions: {
+    register(context, data) {
+      var username = data.username
+      var password = data.password
+      var verifyToken = data.verifyToken
+      context.commit('SET_REGISTERINFO', {username, password, verifyToken})
+      return apiRegisterAuth()
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+          console.log(error)
+      })
+
+    },
     destroyAccessToken(context){
       if(context.getters.loggedIn){
         return apiLogout('Bearer ' + context.getters.getAccessToken)
@@ -61,7 +94,7 @@ export default new Vuex.Store({
         })
       }
     },
-    retrieveToken(context, credentials){
+    loginAuth(context, credentials){
       var username = credentials.username
       var password = credentials.password
       context.commit('SET_USER',{ username, password});
@@ -69,7 +102,9 @@ export default new Vuex.Store({
       return apiLoginAuth()
       .then(response => {
         context.commit('SET_ACCESS_TOKEN', response.data.access_token);
+        context.commit('SET_USER_PERMISSION', response.data.auth);
         VueCookies.set('access_token', response.data.access_token);
+        VueCookies.set('permission', response.data.auth);
       })
     },
     getData(context){
@@ -80,15 +115,6 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err);
       });
-    },
-    LoginAuth(context) {
-      return apiLoginAuth()
-        .then(res => {
-          context.commit('SET_USER', res.user);
-        })
-        .catch(err => {
-          console.log(err);
-      })
     }
   }
 })

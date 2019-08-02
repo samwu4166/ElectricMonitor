@@ -33,12 +33,17 @@ export default {
     },
     methods: {
         login () {
-            this.$store.dispatch('retrieveToken',{
+            this.$store.dispatch('loginAuth',{
                 username: this.username,
                 password: this.password
             })
             .then(response => {
-                this.$router.push('/home')
+                if(this.$store.getters.getPermission === '0'){
+                    this.$router.push('/backendManagement')
+                }
+                else{
+                    this.$router.push('/home')
+                }
             })
         }
     }

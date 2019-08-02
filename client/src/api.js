@@ -15,6 +15,7 @@ export const apiDataRequest = token => {
 ///api/point/mssql
 //login auth
 export const apiLoginAuth = () => axiosInstance.post('/auth/login', store.getters.getUser);
+export const apiRegisterAuth = () => axiosInstance.post('/auth/register', store.getters.getRegisterInfo);
 export const apiLogout = token => {
     axiosInstance.defaults.headers.common['Authorization'] = token;
     return axiosInstance.post('/logout');

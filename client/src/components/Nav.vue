@@ -10,7 +10,7 @@
                 <b-navbar-nav v-if="!loggedIn" class="ml-auto">
                     <b-nav-item @click="onLoginClick">LOGIN</b-nav-item>
                 </b-navbar-nav>
-                <b-navbar-nav v-if="!loggedIn" class="ml-auto">
+                <b-navbar-nav v-if="!loggedIn">
                     <b-nav-item @click="onRegisterClick">REGISTER</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav v-if="loggedIn" class="ml-auto">
