@@ -4,7 +4,7 @@ var conn = require('../connect');
 var moment = require('moment');
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
-var config = require('./config');
+var config = require('../config');
 
 /* GET data from mysql */
 router.get('/mysql', function(req, res, next) {
