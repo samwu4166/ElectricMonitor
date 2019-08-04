@@ -10,8 +10,13 @@ var config = {
     },
     options: {
         port : 1401,
-        database: 'testDB'
+        database: 'testDB',
+        rowCollectionOnRequestCompletion: true,
     }
   }
+var private_key = 'BD78B9F28AF21922BECAC57EBCC3F';
 
-module.exports = config;
+module.exports = {
+    config,
+    private_key,
+};

@@ -1,0 +1,46 @@
+var jwt = require('jsonwebtoken')
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
+var bcrypt = require('bcrypt');
+var {config,private_key} = require('../../config');
+import {rowSql2Json} from '../../includes/rowsql2json';
+
+export function authenticate(req,res){
+    let account = req.body.account;
+    let password = req.body.password;
+    let body = req.body;
+    var connection = new Connection(config);
+    let isverify = 1;
+    var authaccount = new Request(`select * from user_info where account = '${account}'`,function(err,rowCount,rows){
+        if(err){
+            console.log(err);
+            res.status(400).json({status:"bad request",data:{msg:err}});
+            isverify = 0;
+        }
+        else if(!rowCount){
+            res.status(400).json({status:"bad request",data:{msg:"no matched account"}});
+            isverify = 0;
+        }
+        else{
+            let json_data = rowSql2Json(rows[0]);
+            if(bcrypt.compareSync(password, json_data['password'])){
+                const payload = body;
+                const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, private_key);
+                res.status(200).json({status:"OK",data:{msg:'Login success!',token:token}});
+                isverify = 1;
+            }
+            else{
+                res.status(400).json({status:"Bad Request",data:{msg:'Login failed! password wrong'}});
+                isverify = 0;
+            }
+        }
+    })
+    connection.on('connect',function(err){
+        if(err){
+            console.log(err);
+            return;
+        }else{
+            connection.execSql(authaccount);
+        }
+    })
+}
