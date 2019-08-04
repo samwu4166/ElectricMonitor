@@ -11,7 +11,7 @@ export function authenticate(req,res){
     let body = req.body;
     var connection = new Connection(config);
     let isverify = 1;
-    var authaccount = new Request(`select * from user_info where account = '${account}'`,function(err,rowCount,rows){
+    var authaccount = new Request(`select uuid,account,password,auth from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);
             res.status(400).json({status:"bad request",data:{msg:err}});
@@ -24,7 +24,8 @@ export function authenticate(req,res){
         else{
             let json_data = rowSql2Json(rows[0]);
             if(bcrypt.compareSync(password, json_data['password'])){
-                const payload = body;
+                const payload = json_data;
+                // console.log(json_data);
                 const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, private_key);
                 res.status(200).json({status:"OK",data:{msg:'Login success!',token:token}});
                 isverify = 1;
