@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-import { getUser } from '../controllers/user/getuser';
+import { getUserList,getUser } from '../controllers/user/getuser';
 import { postUser } from '../controllers/user/postuser';
 
 
 //Get client list
-router.get('/',getUser);
-
+router.get('/',getUserList);
+//Get specify client
+router.get('/:account',getUser);
 /* post client */
 router.post('/', postUser);
 
