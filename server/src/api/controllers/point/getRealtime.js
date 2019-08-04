@@ -1,5 +1,5 @@
 import {Connection,Request} from 'tedious';
-var config = require('../../config');
+var { config } = require('../../config');
 
 export function getRealtimeMssql(req,res){
     let point_nums = 9;

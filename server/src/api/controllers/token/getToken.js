@@ -1,6 +1,6 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
-var config = require('../../config');
+var { config } = require('../../config');
 
 export function getToken(req,res){
     var connection = new Connection(config);
@@ -9,7 +9,7 @@ export function getToken(req,res){
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
           console.log(err);
-          res.status(400).json({status:"bad request",data:{err_msg:err}})
+          res.status(400).json({status:"bad request",data:{message:err}})
         } 
     })
     request.on('row', function(columns) {

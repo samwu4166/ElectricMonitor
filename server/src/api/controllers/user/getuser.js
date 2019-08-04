@@ -1,6 +1,6 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
-var config = require('../../config');
+var { config } = require('../../config');
 import {rowSql2Json} from '../../includes/rowsql2json';
 
 function getUserList(req,res) {
@@ -9,7 +9,7 @@ function getUserList(req,res) {
   var getUser = new Request(`select * from user_info`,function(err){
     if(err){
       //console.log(err);
-      res.status(400).json({status:"bad request",data:{msg:err}});
+      res.status(400).json({status:"bad request",data:{message:err}});
     }
   })
 
@@ -42,15 +42,15 @@ function getUser(req,res){
   var authaccount = new Request(`select * from user_info where account = '${account}'`,function(err,rowCount,rows){
       if(err){
           console.log(err);
-          res.status(400).json({status:"bad request",data:{msg:err}});
+          res.status(400).json({status:"bad request",data:{message:err}});
       }
       else if(!rowCount){
           console.log("no matched");
-          res.status(400).json({status:"bad request",data:{msg:"no matched"}});
+          res.status(400).json({status:"bad request",data:{message:"no matched"}});
       }
       else{
           let json_data = rowSql2Json(rows[0]);
-          res.status(200).json({status:"OK",data:{msg:json_data}});
+          res.status(200).json({status:"OK",data:{message:json_data}});
       }
   })
   connection.on('connect',function(err){

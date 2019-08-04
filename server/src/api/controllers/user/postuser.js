@@ -1,6 +1,6 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
-var config = require('../../config');
+var { config } = require('../../config');
 const uuidv1 = require('uuid/v1');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -20,12 +20,12 @@ export function postUser(req,res){
         if (err) {
           tokencontinue=0;
           console.log(err);
-          res.status(400).json({status:"bad request",data:{msg:err}});
+          res.status(400).json({status:"bad request",data:{message:err}});
         }
         else if(!rowCount){
           tokencontinue=0;
           //console.log("error checktoken")
-          res.status(400).json({status:"bad request",data:{msg:'you can not use this token to build account'}});
+          res.status(400).json({status:"bad request",data:{message:'you can not use this token to build account'}});
        }
     })
   
@@ -39,12 +39,12 @@ export function postUser(req,res){
         if(err){
           accountcontinue = 0;
           console.log(err);
-          res.status(400).json({status:"bad request",data:{msg:err}});
+          res.status(400).json({status:"bad request",data:{message:err}});
         }
         else if(rowCount){
           accountcontinue = 0;
           //console.log("error checkacount")
-          res.status(400).json({status:"bad request",data:{msg:'duplicate account !'}});
+          res.status(400).json({status:"bad request",data:{message:'duplicate account !'}});
         }
       })
       checkaccount.on('requestCompleted',async function(){
@@ -53,18 +53,18 @@ export function postUser(req,res){
         }
         //console.log("check account complete");
         let crypt_word = bcrypt.hashSync(password, saltRounds);
-        //res.status(200).json({status:"OK",data:{msg:'you can use this account to create account!'}});
+        //res.status(200).json({status:"OK",data:{message:'you can use this account to create account!'}});
           var createaccount = new Request(`insert into user_info (uuid,account,password,token) values 
           ('${uuidv1()}','${account}','${crypt_word}','${token}')`,function(err,rowCount){
               //console.log("create account start");
               if(err){
                   console.log(err);
-                  res.status(400).json({status:"bad request",data:{msg:err}});
+                  res.status(400).json({status:"bad request",data:{message:err}});
               }
           })
           createaccount.on('requestCompleted',function(){
               //console.log("create account finish");
-              res.status(200).json({status:"OK",data:{msg:"create user successfully"}});
+              res.status(200).json({status:"OK",data:{message:"create user successfully"}});
           })
           connection.execSql(createaccount);
       })
@@ -74,7 +74,7 @@ export function postUser(req,res){
     connection.on('connect', function(err) {
         if(err){
             console.log(err)
-            res.status(400).json({status:"bad request",data:{msg:err}});
+            res.status(400).json({status:"bad request",data:{message:err}});
         }else{
             connection.execSql(checktoken);
         }

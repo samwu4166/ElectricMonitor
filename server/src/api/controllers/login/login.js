@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var bcrypt = require('bcrypt');
@@ -14,11 +14,11 @@ export function authenticate(req,res){
     var authaccount = new Request(`select uuid,account,password,auth from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);
-            res.status(400).json({status:"bad request",data:{msg:err}});
+            res.status(400).json({status:"bad request",data:{message:err}});
             isverify = 0;
         }
         else if(!rowCount){
-            res.status(400).json({status:"bad request",data:{msg:"no matched account"}});
+            res.status(400).json({status:"bad request",data:{message:"no matched account"}});
             isverify = 0;
         }
         else{
@@ -27,11 +27,11 @@ export function authenticate(req,res){
                 const payload = json_data;
                 // console.log(json_data);
                 const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, private_key);
-                res.status(200).json({status:"OK",data:{msg:'Login success!',token:token}});
+                res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
                 isverify = 1;
             }
             else{
-                res.status(400).json({status:"Bad Request",data:{msg:'Login failed! password wrong'}});
+                res.status(400).json({status:"Bad Request",data:{message:'Login failed! password wrong'}});
                 isverify = 0;
             }
         }
