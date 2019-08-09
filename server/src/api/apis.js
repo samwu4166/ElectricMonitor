@@ -12,6 +12,7 @@ function verifyToken(token){
 }
 // valid header authorization = Bearer+" "+token
 api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
+  // console.log(req.headers);
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer'){
     const status = 401
     const message = 'Bad authorization header'
@@ -20,8 +21,17 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
   }
   try{
       var decode = verifyToken(req.headers.authorization.split(' ')[1]);
-      // console.log('verify token success');
-      next()
+      const url = req.originalUrl;
+      let { _auth } = decode.payload;
+      if (!url.match(/point/g) && _auth!=0 ) {   // if url dont match point but permission is not admin
+          // console.log("return back permission")
+          res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this'}})
+          return
+      }
+      else {
+          // console.log("next")
+          next()
+      }
   }catch(err){
       const status = 401;
       const message = 'Error: access_token is not valid';

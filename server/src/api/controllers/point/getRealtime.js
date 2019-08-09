@@ -27,7 +27,6 @@ export function getRealtimeMssql(req,res){
         if(err){
             console.log(err)
         }else{
-            console.log('connected to mssql .')
             connection.execSql(request);
         }
     });
