@@ -8,7 +8,9 @@ import {rowSql2Json} from '../../includes/rowsql2json';
 export function authenticate(req,res){
     let account = req.body.account;
     let password = req.body.password;
+    let body = req.body;
     var connection = new Connection(config);
+    let isverify = 1;
     var authaccount = new Request(`select uuid,account,password,auth from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);

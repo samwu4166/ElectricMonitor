@@ -120,7 +120,7 @@ base_url : '/api/v1'
     }   
 }
 ```
-### post a new user
+### register
 ```javascript
 {
     method : "POST",
@@ -145,7 +145,7 @@ base_url : '/api/v1'
 ```javascript
 {
     method : "POST",
-    url : "/auth/register",
+    url : "/auth/login",
     payload : {
         "account" : "ACCOUNT",
         "password" : "PASSWORD(example:larrycp3vul3)"
