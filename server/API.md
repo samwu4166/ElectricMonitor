@@ -26,7 +26,8 @@ base_url : '/api/v1'
             "kw": "213",
             "is_on": "1",
             "datetime": "DATE_TIME"
-        }, ... list
+        },
+        ...
     ]
 }
 ```
@@ -44,10 +45,11 @@ base_url : '/api/v1'
         "data": {
             "valid_token": [
                 {
-                    "token": "TOKEN",
+                    "token": "ACCOUNT_TOKEN",
                     "auth": "AUTH",
                     "us_use": "USE_STATE"
-                }...
+                },
+                ...
             ]
         }
     }   
@@ -61,11 +63,99 @@ base_url : '/api/v1'
     header : {
         "authorization" : "your jwt token"
     },
+    payload : {
+        "id" : 'AUTH_ID'
+    },
     data : {
         "status": "OK",
         "data": {
-            "valid_token": "67a4d0a0-b54b-11e9-a1f4-3dc4beb456e0",
-            "auth": "2"
+            "valid_token": "VALID ACCOUNT_TOKEN",
+            "auth": "AUTH"
+        }
+    }   
+}
+```
+
+## user
+### get clients
+```javascript
+{
+    method : "GET",
+    url : "user",
+    header : {
+        "authorization" : "your jwt token"
+    },
+    payload : {
+        "token" : "VALID_TOKEN",
+    },
+    data : {
+        {
+            "uuid": "UID",
+            "account": "ACCOUNT",
+            "password": "PASSWORD",
+            "token": "ACCOUNT_TOKEN"
+        },
+        ...
+    }   
+}
+```
+### get specify clients
+```javascript
+{
+    method : "GET",
+    url : "user/:id",
+    header : {
+        "authorization" : "your jwt token"
+    },
+    payload : {
+        "token" : "VALID_TOKEN",
+    },
+    data : {
+        {
+            "uuid": "UID",
+            "account": "ACCOUNT",
+            "password": "PASSWORD",
+            "token": "ACCOUNT_TOKEN"
+        },
+    }   
+}
+```
+### post a new user
+```javascript
+{
+    method : "POST",
+    url : "/auth/register",
+    payload : {
+        "token" : "VALID_TOKEN",
+        "account" : "ACCOUNT",
+        "password" : "PASSWORD(example:larrycp3vul3)"
+    },
+    data : {
+        "status": "OK",
+        "data": {
+            "status": "STATUS",
+            "data": {
+                "message": "MESSAGE"
+            }
+        }
+    }   
+}
+```
+### login
+```javascript
+{
+    method : "POST",
+    url : "/auth/register",
+    payload : {
+        "account" : "ACCOUNT",
+        "password" : "PASSWORD(example:larrycp3vul3)"
+    },
+    data : {
+        "status": "OK",
+        "data": {
+            "message": "STATUS",
+            "permission": "AUTH",
+            "token": "VALID_JWT_TOKEN"
         }
     }   
 }
