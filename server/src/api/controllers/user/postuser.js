@@ -64,7 +64,17 @@ export function postUser(req,res){
           })
           createaccount.on('requestCompleted',function(){
               //console.log("create account finish");
-              res.status(200).json({status:"OK",data:{message:"create user successfully"}});
+              connection.execSql(
+                new Request(`Update authtoken set us_use=1 where token='${token}' `,
+                  function(err){
+                    if(err){
+                      console.log(err);
+                      res.status(400).json({status:"bad request",data:{message:err}});
+                    }else{
+                      res.status(200).json({status:"OK",data:{message:"create user successfully"}});
+                    }
+                  })
+              );
           })
           connection.execSql(createaccount);
       })

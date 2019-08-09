@@ -28,7 +28,7 @@ export function authenticate(req,res){
                     _account : json_data['account'],
                     _auth : json_data['auth'],
                 };
-                console.log(json_data);
+                // console.log(json_data);
                 const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, private_key);
                 res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
                 isverify = 1;
