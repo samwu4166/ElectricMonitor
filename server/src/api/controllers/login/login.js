@@ -8,9 +8,7 @@ import {rowSql2Json} from '../../includes/rowsql2json';
 export function authenticate(req,res){
     let account = req.body.account;
     let password = req.body.password;
-    let body = req.body;
     var connection = new Connection(config);
-    let isverify = 1;
     var authaccount = new Request(`select uuid,account,password,auth from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);
@@ -24,7 +22,10 @@ export function authenticate(req,res){
         else{
             let json_data = rowSql2Json(rows[0]);
             if(bcrypt.compareSync(password, json_data['password'])){
-                const payload = json_data;
+                const payload = {
+                    _account : json_data['account'],
+                    _token : json_data['token'],
+                };
                 // console.log(json_data);
                 const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, private_key);
                 res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
