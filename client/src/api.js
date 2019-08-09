@@ -20,7 +20,7 @@ export const apiLogout = token => {
     axiosInstance.defaults.headers.common['authorization'] = token;
     return axiosInstance.post('/logout');
 }
-
+//backend generate key
 export const apiUserRegisterKeyGeneration = (token, permission) => {
     axiosInstance.defaults.headers.common['authorization'] = token;
     return axiosInstance.post('/token', { "id": permission });

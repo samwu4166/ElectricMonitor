@@ -7,13 +7,19 @@
                 <b-navbar-nav>
                     <b-nav-text>test2</b-nav-text>
                 </b-navbar-nav>
+                <b-navbar-nav id="home" v-if="loggedIn" class="ml-auto">
+                    <b-nav-item @click="onHomeClick">HOME</b-nav-item>
+                </b-navbar-nav>
+                <b-navbar-nav id="management" v-if="permission==='0' && loggedIn">
+                    <b-nav-item @click="onManagementClick">MANAGEMENT</b-nav-item>
+                </b-navbar-nav>
                 <b-navbar-nav v-if="!loggedIn" class="ml-auto">
                     <b-nav-item @click="onLoginClick">LOGIN</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav v-if="!loggedIn">
                     <b-nav-item @click="onRegisterClick">REGISTER</b-nav-item>
                 </b-navbar-nav>
-                <b-navbar-nav v-if="loggedIn" class="ml-auto">
+                <b-navbar-nav v-if="loggedIn">
                     <b-nav-item @click="onLogoutClick">LOGOUT</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
@@ -26,6 +32,9 @@ export default{
     computed: {
         loggedIn(){
             return this.$store.getters.loggedIn
+        },
+        permission(){
+            return this.$store.getters.getPermission
         }
     },
     methods: {
@@ -37,6 +46,12 @@ export default{
         },
         onRegisterClick(){
             this.$router.push('/register')
+        },
+        onHomeClick(){
+            this.$router.push('/home')
+        },
+        onManagementClick(){
+            this.$router.push('./backendManagement')
         }
     }
 }

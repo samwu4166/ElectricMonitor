@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueCookies from 'vue-cookies';
 import VueRouter from 'vue-router';
+import Clipboard from 'v-clipboard';
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)){
@@ -48,6 +49,8 @@ router.beforeEach((to, from, next) => {
 Vue.use(BootstrapVue);
 Vue.use(VueCookies);
 Vue.use(VueRouter);
+Vue.use(Clipboard);
+
 Vue.config.productionTip = false;
 
 new Vue({
