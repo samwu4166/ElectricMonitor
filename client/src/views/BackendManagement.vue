@@ -2,18 +2,18 @@
 <div class="backendManagement">
     <b-container fluid>
         <b-row>
-            <b-dropdown id="permission_selection" :text="text">
-                <b-dropdown-item-button>0</b-dropdown-item-button>
-                <b-dropdown-item-button>1</b-dropdown-item-button>
-                <b-dropdown-item-button>2</b-dropdown-item-button>
-            </b-dropdown>
+            <KeyGeneration></KeyGeneration>
         </b-row>
     </b-container>
 </div>
 </template>
 
 <script>
+import KeyGeneration from "../components/Key_generation.vue"
 export default{
+    components:{
+        KeyGeneration
+    },
     data(){
         return {
             text: "AAAAAA"

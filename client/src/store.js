@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
-import {apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout} from "./api.js"
+import {apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout, apiUserRegisterKeyGeneration} from "./api.js"
 import Axios from 'axios';
 
 Vue.use(Vuex)
@@ -21,23 +21,42 @@ export default new Vuex.Store({
       verifyToken: null,
       username: null,
       password: null
+    },
+    backendManagement: {
+      keyGeneration: {
+        permission: null,
+        key: null
+      }
     }
   },
   getters: {
     getUser: state => {
-      return state.user;
+      return {
+        account: state.user.username,
+        password: state.user.password
+      }
     },
     loggedIn(state) {
       return state.user.access_token !== null;
     },
     getAccessToken(state){
-      return state.access_token;
+      return state.user.access_token;
     },
     getRegisterInfo: state => {
-      return state.registerInfo;
+      return {
+        token: state.registerInfo.verifyToken,
+        account: state.registerInfo.username,
+        password: state.registerInfo.password
+      }
     },
     getPermission: state => {
       return state.user.permission;
+    },
+    getBackendKeyGenerationPermission: state => {
+      return state.backendManagement.keyGeneration.permission;
+    },
+    getBackendKeyGenerationKey: state => {
+      return state.backendManagement.keyGeneration.key;
     }
   },
   mutations: {
@@ -64,9 +83,26 @@ export default new Vuex.Store({
       state.registerInfo.username = username
       state.registerInfo.password = password
       state.registerInfo.verifyToken = verifyToken
+    },
+    SET_BACKEND_KEYGENERATION_PERMISSION(state, permission) {
+      state.backendManagement.keyGeneration.permission = permission
+    },
+    SET_BACKEND_KEYGENERATION_KEY(state, key) {
+      state.backendManagement.keyGeneration.key = key
     }
   },
   actions: {
+    key_generation(context, permission) {
+      return apiUserRegisterKeyGeneration('Bearer ' + context.getters.getAccessToken, permission)
+        .then(response => {
+          console.log(response)
+          context.commit('SET_BACKEND_KEYGENERATION_KEY', response.data.data.valid_token)
+          context.commit('SET_BACKEND_KEYGENERATION_PERMISSION', response.data.data.auth)
+        })
+        .catch(error => {
+        console.log(error)
+      })
+    },
     register(context, data) {
       var username = data.username
       var password = data.password
@@ -101,13 +137,13 @@ export default new Vuex.Store({
 
       return apiLoginAuth()
       .then(response => {
-        context.commit('SET_ACCESS_TOKEN', response.data.access_token);
-        context.commit('SET_USER_PERMISSION', response.data.auth);
-        VueCookies.set('access_token', response.data.access_token);
-        VueCookies.set('permission', response.data.auth);
+        context.commit('SET_ACCESS_TOKEN', response.data.data.token);
+        context.commit('SET_USER_PERMISSION', response.data.data.permission);
+        VueCookies.set('access_token', response.data.data.token);
+        VueCookies.set('permission', response.data.data.permission);
       })
     },
-    getData(context){
+    getData(context) {
       return apiDataRequest('Bearer ' + context.getters.getAccessToken)
       .then(res => {
         context.commit('SET_DATA', res.data);
