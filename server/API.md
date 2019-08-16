@@ -75,8 +75,23 @@ base_url : '/api/v1'
     }   
 }
 ```
-
-## user
+### extends a token
+```javascript
+{
+    method : "POST",
+    url : "/token/extends",
+    header : {
+        "authorization" : "your jwt token"
+    },
+    data : {
+        "status": "OK",
+        "data": {
+            "valid_token": "VALID ACCOUNT_TOKEN",
+            "auth": "AUTH"
+        }
+    }   
+}
+```
 ### get clients
 ```javascript
 {
@@ -156,6 +171,22 @@ base_url : '/api/v1'
             "message": "STATUS",
             "permission": "AUTH",
             "token": "VALID_JWT_TOKEN"
+        }
+    }   
+}
+```
+### logout
+```javascript
+{
+    method : "POST",
+    url : "/logout",
+    header : {
+        "authorization" : "your jwt token"
+    },
+    data : {
+        "status": "OK",
+        "data": {
+            "message": "STATUS",
         }
     }   
 }
