@@ -26,7 +26,7 @@ base_url : '/api/v1'
     header : {
         "authorization" : "your jwt token"
     },
-    url : '/point/:tagname',
+    url : '/point/:tagname(1~9)',
     data : {
         "status": "OK",
         "msg": {
