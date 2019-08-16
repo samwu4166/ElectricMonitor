@@ -92,6 +92,7 @@ base_url : '/api/v1'
     }   
 }
 ```
+## user
 ### get clients
 ```javascript
 {
@@ -135,6 +136,7 @@ base_url : '/api/v1'
     }   
 }
 ```
+## login auth
 ### register
 ```javascript
 {
