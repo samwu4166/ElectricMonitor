@@ -1,15 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
-import {apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout, apiUserRegisterKeyGeneration} from "./api.js"
+import {apiHistoryDataRequest, apiTokenReRegisterAuth, apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout, apiUserRegisterKeyGeneration} from "./api.js"
 import Axios from 'axios';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    data: [],
+    data: null,
+    historyData: null,
     timeout: 0,
+    expireTimeout: null,
     //login info session
     user:{
       username: null,
@@ -39,6 +41,9 @@ export default new Vuex.Store({
     loggedIn(state) {
       return state.user.access_token !== null;
     },
+    expireTimeoutExist(state) {
+      return state.expireTimeout !== null;
+    },
     getAccessToken(state){
       return state.user.access_token;
     },
@@ -63,8 +68,14 @@ export default new Vuex.Store({
     SET_DATA (state, data){
       state.data = data;
     },
+    SET_HISTORY_DATA(state, historyData) {
+      state.historyData = historyData;
+    },
     SET_TIMEOUT(state, timeout){
       state.timeout = timeout;
+    },
+    SET_EXPIRETIMEOUT(state, expireTimeout) {
+      state.expireTimeout = expireTimeout;
     },
     SET_USER(state, { username, password }){
       state.user.username = username;
@@ -78,6 +89,7 @@ export default new Vuex.Store({
     },
     destroyAccessToken(state){
       state.user.access_token = null;
+      
     },
     SET_REGISTERINFO(state, {username, password, verifyToken}) {
       state.registerInfo.username = username
@@ -92,6 +104,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    expireReRegister(context){
+      return apiTokenReRegisterAuth('Bearer ' + context.getters.getAccessToken)
+      .then(response => {
+        if (context.getters.getAccessToken) {
+          context.commit('SET_ACCESS_TOKEN', response.data.data.token);
+          VueCookies.set('access_token', response.data.data.token);
+          context.commit('SET_EXPIRETIMEOUT',setTimeout(() => {
+            context.dispatch('expireReRegister');
+          }, 3600000))
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
     key_generation(context, permission) {
       return apiUserRegisterKeyGeneration('Bearer ' + context.getters.getAccessToken, permission)
         .then(response => {
@@ -122,10 +149,13 @@ export default new Vuex.Store({
         return apiLogout('Bearer ' + context.getters.getAccessToken)
         .then(response => {
           VueCookies.remove('access_token')
+          VueCookies.remove('permission')
           context.commit('destroyAccessToken')
+
         })
         .catch(error =>{
           VueCookies.remove('access_token')
+          VueCookies.remove('permission')
           context.commit('destroyAccessToken')
         })
       }
@@ -151,6 +181,16 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err);
       });
+    },
+    getHistoryData(context, tagname) {
+      return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
+        .then(res => {
+        context.commit('SET_HISTORY_DATA', res.data);
+        console.log(context.state.historyData);
+      })
+      .catch(error => {
+        console.log(error);  
+      })
     }
   }
 })

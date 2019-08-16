@@ -11,6 +11,9 @@ import VueRouter from 'vue-router';
 import Clipboard from 'v-clipboard';
 
 router.beforeEach((to, from, next) => {
+  if (!store.getters.expireTimeoutExist) {
+    store.dispatch('expireReRegister');
+  }
   if(to.matched.some(record => record.meta.requiresAuth)){
     if(!store.getters.loggedIn){
       next({

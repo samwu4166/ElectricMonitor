@@ -12,9 +12,18 @@ export const apiDataRequest = token => {
     axiosInstance.defaults.headers.common['authorization'] = token;
     return axiosInstance.get('/point');
 }
+export const apiHistoryDataRequest = (token, tagname) => {
+    axiosInstance.defaults.headers.common['authorization'] = token;
+    return axiosInstance.get(`/point/${ tagname }`);
+}
+
 ///api/point/mssql
 //login auth
 export const apiLoginAuth = () => axiosInstance.post('/auth/login', store.getters.getUser);
+export const apiTokenReRegisterAuth = token => {
+    axiosInstance.defaults.headers.common['authorization'] = token;
+    return axiosInstance.post('/token/extends')
+}
 export const apiRegisterAuth = () => axiosInstance.post('/auth/register', store.getters.getRegisterInfo);
 export const apiLogout = token => {
     axiosInstance.defaults.headers.common['authorization'] = token;

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <b-table striped hover responsive :items="chartdata"></b-table>
+    <b-table striped hover responsive :items="chartdata" @row-clicked="rowClickHandler"></b-table>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
       await this.$store.dispatch('getData');
       this.loaded = true
       this.chartdata = []
-      this.data.forEach(da => {
+      this.data.msg.data.forEach(da => {
         da['_cellVariants'] = {}
         var props = Object.keys(da).slice(3,12)
         var len = props.length
@@ -39,6 +39,9 @@ export default {
       this.timeout = setTimeout(() => {
         this.getData();
       }, 10000);
+    },
+    rowClickHandler(record, index){
+      this.$router.push({name: 'history', params: { tagname: record.tagname[1] }})
     }
   },
   computed: {

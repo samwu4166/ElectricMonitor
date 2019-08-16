@@ -5,6 +5,7 @@ import Logout from './views/Logout.vue'
 import About from './views/About.vue'
 import Register from './views/Register.vue'
 import BackendManagement from './views/BackendManagement.vue'
+import History from './views/History.vue'
 
 Vue.use(Router)
 
@@ -49,6 +50,11 @@ export default new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/history/:tagname',
+      name: 'history',
+      component: History
     },
     {
       path: '/about',

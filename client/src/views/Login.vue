@@ -45,6 +45,7 @@ export default {
                     this.$router.push('/home')
                 }
             })
+
         }
     }
 }
@@ -52,5 +53,6 @@ export default {
 <style>
     .login {
         width:100%;
+        padding-top:calc((100vh - 11.5rem)/2);
     }
 </style>
