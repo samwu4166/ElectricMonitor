@@ -86,8 +86,9 @@ base_url : '/api/v1'
     data : {
         "status": "OK",
         "data": {
-            "valid_token": "VALID ACCOUNT_TOKEN",
-            "auth": "AUTH"
+             "message": "STATUS",
+             "permission": "AUTH",
+             "token":"NEW_TOKEN"
         }
     }   
 }
