@@ -75,7 +75,7 @@ base_url : '/api/v1'
     }   
 }
 ```
-### extends a token
+### extends a jwt token
 ```javascript
 {
     method : "POST",
