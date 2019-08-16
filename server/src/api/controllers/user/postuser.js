@@ -86,6 +86,7 @@ export function postUser(req,res){
             console.log(err)
             res.status(400).json({status:"bad request",data:{message:err}});
         }else{
+            // console.log("connect to sql !");
             connection.execSql(checktoken);
         }
     });
