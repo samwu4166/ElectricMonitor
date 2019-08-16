@@ -8,7 +8,7 @@ export function getInterval(req,res){
         return
     }
     var connection = new Connection(config);
-    let sql_str = `select * from point_info where tagname = 'A${tag_name}' ORDER BY datetime DESC `;
+    let sql_str = `select top 1000 * from point_info where tagname = 'A${tag_name}' ORDER BY datetime DESC `;
     let data_arr = [];
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
