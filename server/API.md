@@ -12,23 +12,11 @@ base_url : '/api/v1'
     },
     url : '/point',
     data : [
-        {
-            "tagname": "A1",
-            "site": "N1",
-            "rs_v": "380",
-            "st_v": "380",
-            "tr_v": "380",
-            "r_a": "808",
-            "s_a": "980",
-            "t_a": "944",
-            "kwh": "964",
-            "pf": "196",
-            "kw": "213",
-            "is_on": "1",
-            "datetime": "DATE_TIME"
-        },
-        ...
-    ]
+        "status": "OK",
+        "msg": {
+            "tagname": "All",
+            "data": []
+        }
 }
 ```
 ### get specify tagname point
@@ -39,24 +27,12 @@ base_url : '/api/v1'
         "authorization" : "your jwt token"
     },
     url : '/point/:tagname',
-    data : [
-        {
-            "tagname": "A1",
-            "site": "N1",
-            "rs_v": "380",
-            "st_v": "380",
-            "tr_v": "380",
-            "r_a": "808",
-            "s_a": "980",
-            "t_a": "944",
-            "kwh": "964",
-            "pf": "196",
-            "kw": "213",
-            "is_on": "1",
-            "datetime": "DATE_TIME"
-        },
-        ...
-    ]
+    data : {
+        "status": "OK",
+        "msg": {
+            "tagname": "All",
+            "data":[]
+    }
 }
 ```
 ## token

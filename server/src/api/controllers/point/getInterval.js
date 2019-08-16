@@ -8,7 +8,8 @@ export function getInterval(req,res){
         return
     }
     var connection = new Connection(config);
-    let sql_str = `select top 1000 * from point_info where tagname = 'A${tag_name}' ORDER BY datetime DESC `;
+    // need bonus price to upgrade the maximun points to show
+    let sql_str = `select top 360 * from point_info where tagname = 'A${tag_name}' ORDER BY datetime DESC `;
     let data_arr = [];
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
@@ -27,7 +28,7 @@ export function getInterval(req,res){
     });
     request.on('doneInProc', function (rowCount, more, rows) {  
       //console.log('doneInProc: '+ rowCount + ' row(s) returned');
-      res.send(data_arr);
+      res.status(200).json({status:"OK",msg:{tagname:tag_name,data:data_arr}});
     });   
     connection.on('connect', function(err) {
         if(err){
