@@ -1,15 +1,20 @@
 import {Connection,Request} from 'tedious';
 var { config } = require('../../config');
 
-export function getRealtime(req,res){
-    let point_nums = 9;
-    let site_num = 1;
+export function getInterval(req,res){
+    let tag_name = req.params.tagname;
+    if(tag_name==undefined){
+        res.status(400).json({status:'Bad Request',msg:'no assign variable'})
+        return
+    }
     var connection = new Connection(config);
-    let sql_str = `select t.* from (select TOP ${point_nums} * from point_info where site = 'N${site_num}' ORDER BY point_info.datetime DESC)t order by t.tagname`;
+    let sql_str = `select * from point_info where tagname = 'A${tag_name}' ORDER BY datetime DESC `;
     let data_arr = [];
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
           console.log(err);
+          res.status(400).json({status:'Bad Request',msg:'error with query'})
+          return
         } 
     })
   

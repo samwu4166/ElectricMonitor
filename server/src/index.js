@@ -28,7 +28,9 @@ app.options("/*", function(req, res, next){
 });
 // visit spa
 app.use('/api/v1', apiRouter);
-
+app.get('*',function(req,res){
+   res.sendStatus(200);
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

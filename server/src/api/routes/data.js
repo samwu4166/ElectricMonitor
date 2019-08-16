@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
-import {getRealtimeMssql} from '../controllers/point/getRealtime';
+import { getRealtime } from '../controllers/point/getRealtime';
+import { getInterval } from '../controllers/point/getInterval';
 
 /* Get data from mssql*/
-router.get('/', getRealtimeMssql);
+router.get('/', getRealtime);
+router.get('/:tagname',getInterval)
 
 module.exports = router;

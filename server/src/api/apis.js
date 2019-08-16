@@ -23,7 +23,7 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
       var decode = verifyToken(req.headers.authorization.split(' ')[1]);
       const url = req.originalUrl;
       let { _auth } = decode.payload;
-      console.log(decode);
+      // console.log(decode);
       if (!url.match(/point/g) && _auth!=0 ) {   // if url dont match point but permission is not admin
           // console.log("return back permission")
           res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this'}})
