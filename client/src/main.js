@@ -9,6 +9,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueCookies from 'vue-cookies';
 import VueRouter from 'vue-router';
 import Clipboard from 'v-clipboard';
+import echarts from "echarts";
 
 router.beforeEach((to, from, next) => {
   if (!store.getters.expireTimeoutExist) {
@@ -53,6 +54,8 @@ Vue.use(BootstrapVue);
 Vue.use(VueCookies);
 Vue.use(VueRouter);
 Vue.use(Clipboard);
+
+Vue.prototype.$echarts = echarts;
 
 Vue.config.productionTip = false;
 

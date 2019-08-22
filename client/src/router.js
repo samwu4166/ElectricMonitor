@@ -73,6 +73,11 @@ export default new Router({
       path: '*',
       name: 'not_found',
       component: About
+    },
+    {
+      path: '/dev',
+      name: 'dev',
+      component: History
     }
   ],
   mode: 'history'
