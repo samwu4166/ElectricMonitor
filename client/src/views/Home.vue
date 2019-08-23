@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <b-alert id="alert" :show="error404" variant="danger" class="">
+      Express server down. Please contect server administrator for any help.
+    </b-alert>
     <b-table striped hover responsive :items="chartdata" @row-clicked="rowClickHandler"></b-table>
   </div>
 </template>
@@ -17,14 +20,13 @@ export default {
   data: () => ({
     loaded: false,
     chartdata: [],
-
   }),
   methods: {
     async getData(){
       await this.$store.dispatch('getData');
       this.loaded = true
       this.chartdata = []
-      this.data.msg.data.forEach(da => {
+      this.data?this.data.msg.data.forEach(da => {
         da['_cellVariants'] = {}
         var props = Object.keys(da).slice(3,12)
         var len = props.length
@@ -34,7 +36,7 @@ export default {
           }
         }
         this.chartdata.push(da)
-      })
+      }):(null)
 
       this.timeout = setTimeout(() => {
         this.getData();
@@ -54,7 +56,7 @@ export default {
     }
   },
   ...mapState([
-    'data'
+    'data','error404'
   ])
   },
   beforeDestroy(){
@@ -62,3 +64,13 @@ export default {
   }
 }
 </script>
+
+<style>
+#alert{
+  max-width:80%;
+  border-radius:5px;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

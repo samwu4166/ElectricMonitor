@@ -41,6 +41,7 @@ export default{
     methods: {
         async getHistoryData(){
             await this.$store.dispatch('getHistoryData', this.$route.params.tagname);
+            console.log(this.historyData)
             this.loaded = true
         }
     }

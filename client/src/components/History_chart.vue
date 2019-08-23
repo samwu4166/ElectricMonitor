@@ -66,7 +66,7 @@ export default{
                     {
                         name: 'handsome',
                         type: 'line',
-                        smooth: true,
+                        smooth: false,
                         symbol: 'none',
                         sampling: 'average',
                         itemStyle: {

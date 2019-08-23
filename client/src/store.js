@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    error404: false,
     data: null,
     historyData: null,
     timeout: 0,
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getError404: state => {
+      return state.error404;
+    },
     getUser: state => {
       return {
         account: state.user.username,
@@ -65,6 +69,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    SET_ERROR404(state, error) {
+      state.error404 = error;
+    },
     SET_DATA (state, data){
       state.data = data;
     },
@@ -177,15 +184,17 @@ export default new Vuex.Store({
       return apiDataRequest('Bearer ' + context.getters.getAccessToken)
       .then(res => {
         context.commit('SET_DATA', res.data);
+        context.commit('SET_ERROR404', false);
       })
-      .catch(err => {
-        console.log(err);
+        .catch(err => {
+          console.log(err);
+          context.commit('SET_ERROR404', true);
       });
     },
     getHistoryData(context, tagname) {
       return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
         .then(res => {
-        context.commit('SET_HISTORY_DATA', res.data);
+        context.commit('SET_HISTORY_DATA', res.data.msg.data);
         console.log(context.state.historyData);
       })
       .catch(error => {
