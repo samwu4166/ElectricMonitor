@@ -26,6 +26,8 @@ app.options("/*", function(req, res, next){
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   res.sendStatus(200);
 });
+// enable proxy to get remote client ip
+app.enable('trust proxy',true);
 // visit spa
 app.use('/api/v1', apiRouter);
 app.get('*',function(req,res){

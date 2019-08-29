@@ -4,8 +4,15 @@ var Request = require('tedious').Request;
 var bcrypt = require('bcrypt');
 var {config,private_key} = require('../../config');
 import {rowSql2Json} from '../../includes/rowsql2json';
-
+var redis = require("redis");
+var client = redis.createClient();
 export function authenticate(req,res){
+    client.on("error", function (err) {
+        console.log("Error " + err);
+        res.status(400).json({status:"bad request",data:{message:err}});
+        return;
+    });
+    console.log(req.ip);
     let account = req.body.account;
     let password = req.body.password;
     let body = req.body;
@@ -29,9 +36,11 @@ export function authenticate(req,res){
                     _auth : json_data['auth'],
                 };
                 // console.log(json_data);
-                const token = jwt.sign({ payload }, private_key, { expiresIn: '7d' });
+                const token = jwt.sign({ payload }, private_key, { expiresIn: '0.5h' });
+                client.set(json_data['account'],token,'EX','1800'); // 30 minutes
                 res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
                 isverify = 1;
+                
             }
             else{
                 res.status(400).json({status:"Bad Request",data:{message:'Login failed! password wrong'}});
