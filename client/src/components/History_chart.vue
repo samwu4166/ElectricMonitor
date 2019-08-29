@@ -1,5 +1,5 @@
 <template>
-    <div id="echart" style="width: 600px; height: 400px;"></div>
+    <div :id="'echart'+index" style="width: 600px; height: 400px;"></div>
 </template>
 
 
@@ -7,6 +7,7 @@
 
 export default{
     props: [
+        'index',
         'data',
         'date'
     ],
@@ -15,7 +16,7 @@ export default{
     },
     methods: {
         drawChart(){
-            let myChart = this.$echarts.init(document.getElementById("echart"));
+            let myChart = this.$echarts.init(document.getElementById("echart"+this.index));
             let option = {
                 tooltip: {
                     trigger: 'axis',

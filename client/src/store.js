@@ -96,7 +96,7 @@ export default new Vuex.Store({
     },
     destroyAccessToken(state){
       state.user.access_token = null;
-      
+
     },
     SET_REGISTERINFO(state, {username, password, verifyToken}) {
       state.registerInfo.username = username
@@ -119,7 +119,7 @@ export default new Vuex.Store({
           VueCookies.set('access_token', response.data.data.token);
           context.commit('SET_EXPIRETIMEOUT',setTimeout(() => {
             context.dispatch('expireReRegister');
-          }, 3600000))
+          }, 600000))
         }
       })
       .catch(error => {
@@ -194,11 +194,12 @@ export default new Vuex.Store({
     getHistoryData(context, tagname) {
       return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
         .then(res => {
-        context.commit('SET_HISTORY_DATA', res.data.msg.data);
+        context.commit('SET_HISTORY_DATA', res.data);
+        //res.data.msg.data
         console.log(context.state.historyData);
       })
       .catch(error => {
-        console.log(error);  
+        console.log(error);
       })
     }
   }

@@ -1,6 +1,10 @@
 <template>
 <div class="history">
-    <HistoryChart v-if="loaded" :data="data" :date="date"></HistoryChart>
+    <b-tabs fill>
+        <b-tab v-for="(tab, index) in tab_name" :key='index' :title='tab'>
+                <HistoryChart class="mx-auto" v-if="loaded" :data="data" :date="date" :index="index"></HistoryChart>
+        </b-tab>
+    </b-tabs>
 </div>
 </template>
 
@@ -8,7 +12,7 @@
 import { mapState } from 'vuex'
 import HistoryChart from '../components/History_chart'
 export default{
-    components:{
+    components: {
         HistoryChart
     },
     mounted(){
@@ -16,6 +20,7 @@ export default{
     },
     data: () => ({
         loaded: false,
+        tab_name: ['rs_v', 'st_v', 'tr_v', 'r_a', 's_a', 't_a', 'kwh', 'pf', 'kw']
     }),
     computed: {
         data: function(){
@@ -46,6 +51,4 @@ export default{
         }
     }
 }
-
-
 </script>
