@@ -111,7 +111,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    expireReRegister(context){
+    expireReRegister(context) {
       return apiTokenReRegisterAuth('Bearer ' + context.getters.getAccessToken)
       .then(response => {
         if (context.getters.getAccessToken) {
@@ -194,7 +194,7 @@ export default new Vuex.Store({
     getHistoryData(context, tagname) {
       return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
         .then(res => {
-        context.commit('SET_HISTORY_DATA', res.data);
+        context.commit('SET_HISTORY_DATA', res.data.msg.data);
         //res.data.msg.data
         console.log(context.state.historyData);
       })

@@ -12,7 +12,7 @@ import Clipboard from 'v-clipboard';
 import echarts from "echarts";
 
 router.beforeEach((to, from, next) => {
-  if (!store.getters.expireTimeoutExist) {
+  if (store.getters.loggedIn && !store.getters.expireTimeoutExist) {
     store.dispatch('expireReRegister');
   }
   if(to.matched.some(record => record.meta.requiresAuth)){

@@ -1,10 +1,12 @@
 <template>
 <div class="history">
-    <b-tabs fill>
-        <b-tab v-for="(tab, index) in tab_name" :key='index' :title='tab'>
-                <HistoryChart class="mx-auto" v-if="loaded" :data="data" :date="date" :index="index"></HistoryChart>
-        </b-tab>
-    </b-tabs>
+    <b-card no-body>
+        <b-tabs fill card>
+            <b-tab v-for="(tab, index) in tab_name" :key='index' :title='tab'>
+                    <HistoryChart class="mx-auto" v-if="loaded" :tab_name="tab" :data="getTabData(tab)" :date="date" :index="index"></HistoryChart>
+            </b-tab>
+        </b-tabs>
+    </b-card>
 </div>
 </template>
 
@@ -48,7 +50,20 @@ export default{
             await this.$store.dispatch('getHistoryData', this.$route.params.tagname);
             console.log(this.historyData)
             this.loaded = true
+        },
+        getTabData(tab_name){
+            var length = this.historyData.length
+            var data = []
+            for(var i = 0; i < length; i++){
+                data.push(this.historyData[i][tab_name])
+            }
+            return data
         }
     }
 }
 </script>
+<style>
+.history{
+    height: 100%;
+}
+</style>

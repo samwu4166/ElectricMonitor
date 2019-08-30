@@ -1,5 +1,5 @@
 <template>
-    <div :id="'echart'+index" style="width: 600px; height: 400px;"></div>
+    <div :id="'echart'+index" style="width: 100%; height: 100%;"></div>
 </template>
 
 
@@ -9,13 +9,19 @@ export default{
     props: [
         'index',
         'data',
-        'date'
+        'date',
+        'tab_name'
     ],
     mounted(){
-        this.drawChart()
+        this.drawChart(document.getElementById('echart'+this. index))
     },
     methods: {
-        drawChart(){
+        drawChart(worldMapContainerInstance){
+            var resizeWorldMapContainer = function(worldMapContainer){
+                worldMapContainer.style.width = window.innerWidth + 'px'
+                worldMapContainer.style.height = window.innerHeight*0.7 + 'px'
+            }
+            resizeWorldMapContainer(worldMapContainerInstance)
             let myChart = this.$echarts.init(document.getElementById("echart"+this.index));
             let option = {
                 tooltip: {
@@ -26,14 +32,10 @@ export default{
                 },
                 title: {
                     left: 'center',
-                    text: '我好帥'
+                    text: 'History Data'
                 },
                 toolbox: {
                     feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        restore: {},
                         saveAsImage: {}
                     }
                 },
@@ -65,7 +67,7 @@ export default{
                 }],
                 series: [
                     {
-                        name: 'handsome',
+                        name: this.tab_name,
                         type: 'line',
                         smooth: false,
                         symbol: 'none',
@@ -87,7 +89,10 @@ export default{
                 ]
             }
             myChart.setOption(option);
-
+            window.onresize = function(){
+                resizeWorldMapContainer(worldMapContainerInstance);
+                myChart.resize();
+            }
         }
     }
 }

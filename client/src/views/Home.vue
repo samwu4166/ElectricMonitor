@@ -59,7 +59,8 @@ export default {
     'data','error404'
   ])
   },
-  beforeDestroy(){
+  beforeDestroy: function(){
+    console.log("test")
     this.timeout && clearTimeout(this.timeout);
   }
 }

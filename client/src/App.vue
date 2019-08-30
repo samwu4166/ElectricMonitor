@@ -35,6 +35,7 @@ html, body{
 #router {
   margin-top:3.5rem;
   width:100%;
+  max-width: 100%;
   /*padding-top:calc((100vh - 11.5rem)/2);     垂直置中*/
 }
 </style>
