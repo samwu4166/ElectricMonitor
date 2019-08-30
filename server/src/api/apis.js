@@ -19,7 +19,7 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer'){
     const status = 401
     const message = 'Bad authorization header'
-    res.status(status).json({status, message})
+    res.status(status).json({status, message ,error_code:0})
     return
   }
   try{
@@ -30,13 +30,13 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
       let account = decode.payload['_account'];
       client.get(account,function(err,replay){
           if(replay !== req.headers.authorization.split(' ')[1]){
-              res.status(400).json({status:"bad request",data:{message:'this account has been login with other devices'}})
+              res.status(400).json({status:"bad request",data:{message:'this account has been login with other devices',error_code:1}})
               return
           }
           else{
             if (!url.match(/point/g) && _auth!=0 ) {   // if url dont match point but permission is not admin
               // console.log("return back permission")
-              res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this'}})
+              res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this',error_code:2}})
               return
             }
             else {
@@ -49,7 +49,7 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
   }catch(err){
       const status = 401;
       const message = `Error: access_token is not valid (${err})`;
-      res.status(status).json({status, message});
+      res.status(status).json({status, message,error_code:3});
       return
   }
 })
