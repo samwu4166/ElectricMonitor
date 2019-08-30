@@ -36,8 +36,8 @@ export function authenticate(req,res){
                     _auth : json_data['auth'],
                 };
                 // console.log(json_data);
-                const token = jwt.sign({ payload }, private_key, { expiresIn: '0.5h' });
-                client.set(json_data['account'],token,'EX','1800'); // 30 minutes
+                const token = jwt.sign({ payload }, private_key, { expiresIn: 60*5 });
+                client.set(json_data['account'],token,'EX','300'); // 5 minutes
                 res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
                 isverify = 1;
                 

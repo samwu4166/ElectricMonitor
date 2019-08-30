@@ -13,7 +13,7 @@ export function extendToken(req,res,next){
     const payload = decode.payload;
     //console.log(payload);
     // payload = { _account , _auth }
-    const token = jwt.sign({ payload }, private_key, { expiresIn: '0.5h' });
-    client.set(payload['_account'],token,'EX','1800');
+    const token = jwt.sign({ payload }, private_key, { expiresIn: 60*5 });
+    client.set(payload['_account'],token,'EX','300'); // 5 min
     res.status(200).json({status:"OK",data:{message:'extends success!',permission:payload['_auth'],token:token}});
 }
