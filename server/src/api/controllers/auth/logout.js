@@ -19,14 +19,11 @@ export function logout(req,res,next){
                 if(err){
                     console.log("Error " + err);
                     res.status(400).json({status:"bad request",data:{message:err}});
-                    
                     return;
                 }
                 else{
-                    res.status(200).json({status:"logout",data:{message:+" has been logout"}});
-                    
+                    res.status(200).json({status:"logout",data:{message:+" has been logout"}});   
                 }
-                client.quit();
             });
         }
     })  
