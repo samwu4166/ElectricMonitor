@@ -1,9 +1,11 @@
 <template>
-  <div class="home">
-    <b-alert id="alert" :show="error404" variant="danger" class="">
-      Express server down. Please contect server administrator for any help.
-    </b-alert>
-    <b-table striped hover responsive :items="chartdata" @row-clicked="rowClickHandler"></b-table>
+  <div>
+    <div class="home">
+      <b-alert id="alert" :show="error404" variant="danger">
+        Express server down. Please contect server administrator for any help.
+      </b-alert>
+      <b-table sticky-header="calc(100%)" responsive v-if="!error404" :items="chartdata" :fields="fields" @row-clicked="rowClickHandler"></b-table>
+    </div>
   </div>
 </template>
 
@@ -20,13 +22,28 @@ export default {
   data: () => ({
     loaded: false,
     chartdata: [],
+    fields: [
+      { key: 'tagname', stickyColumn: true, isRowHeader: true, variant: 'primary' },
+      'site',
+      'kwh',
+      'kw',
+      'st_v',
+      'rs_v',
+      'tr_v',
+      'r_a',
+      's_a',
+      't_a',
+      'pf',
+      'datetime'
+    ]
   }),
   methods: {
     async getData(){
       await this.$store.dispatch('getData');
-      this.loaded = true
       this.chartdata = []
-      this.data?this.data.msg.data.forEach(da => {
+      //this.data.msg.data.foeeach
+      this.data?this.data.forEach(da => {
+
         da['_cellVariants'] = {}
         var props = Object.keys(da).slice(3,12)
         var len = props.length
@@ -37,6 +54,8 @@ export default {
         }
         this.chartdata.push(da)
       }):(null)
+
+      this.loaded = true
 
       this.timeout = setTimeout(() => {
         this.getData();
@@ -67,6 +86,13 @@ export default {
 </script>
 
 <style>
+.home {
+  width: 100%;
+  align-self: flex-start;
+  height: 100%;
+  overflow: auto;
+  white-space: nowrap;
+}
 #alert{
   max-width:80%;
   border-radius:5px;

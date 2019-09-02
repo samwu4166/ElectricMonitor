@@ -77,7 +77,7 @@ export default new Router({
     {
       path: '/dev',
       name: 'dev',
-      component: History
+      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
     }
   ],
   mode: 'history'

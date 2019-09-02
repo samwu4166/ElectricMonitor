@@ -1,34 +1,34 @@
 <template>
     <div class=register>
-        <b-form action="#"  @submit.prevent="register">
         <b-container fluid>
-            <b-row class="mb-2 justify-content-center" no-gutters>
-                <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
-                    <b-form-input class="rounded-0" placeholder="輸入您的赤兔碼" v-model="verifyToken"></b-form-input>
-                </b-col>
-            </b-row>
-            <b-row class="mb-2 justify-content-center" no-gutters>
-                <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
-                    <b-form-input class="rounded-0" placeholder="Account" v-model="username"></b-form-input>
-                </b-col>
-            </b-row>
-            <b-row class="mb-2 justify-content-center" no-gutters>
-                <b-col col cols="10" xl="3" lg="4" md="5" sm="6">
-                    <b-form-input class="rounded-0" placeholder="new password" type="password" v-model="password"></b-form-input>
-                </b-col>
-            </b-row>
-            <b-row class="mb-2 justify-content-center" no-gutters>
-                <b-col col cols="10" xl="3" lg="4" md="5" sm="6">
-                    <b-form-input class="rounded-0" placeholder="enter password again" type="password" v-model="password2"></b-form-input>
-                </b-col>
-            </b-row>
-            <b-row class="justify-content-center" no-gutters>
-                <b-col>
-                    <b-button class="rounded-0" variant="primary" type="submit">Log In</b-button>
-                </b-col>
-            </b-row>
+            <b-form action="#"  @submit.prevent="register">
+                <b-row class="mb-2 justify-content-center" no-gutters>
+                    <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
+                        <b-form-input class="rounded-0" placeholder="輸入您的赤兔碼" v-model="verifyToken"></b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row class="mb-2 justify-content-center" no-gutters>
+                    <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
+                        <b-form-input class="rounded-0" placeholder="Account" v-model="username"></b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row class="mb-2 justify-content-center" no-gutters>
+                    <b-col col cols="10" xl="3" lg="4" md="5" sm="6">
+                        <b-form-input class="rounded-0" placeholder="new password" type="password" v-model="password"></b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row class="mb-2 justify-content-center" no-gutters>
+                    <b-col col cols="10" xl="3" lg="4" md="5" sm="6">
+                        <b-form-input class="rounded-0" placeholder="enter password again" type="password" v-model="password2"></b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row class="justify-content-center" no-gutters>
+                    <b-col>
+                        <b-button class="rounded-0" variant="primary" type="submit">Register</b-button>
+                    </b-col>
+                </b-row>
+            </b-form>
         </b-container>
-        </b-form>
     </div>
 </template>
 
@@ -67,5 +67,6 @@ export default {
 <style>
     .register {
         width:100%;
+
     }
 </style>

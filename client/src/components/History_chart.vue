@@ -1,5 +1,5 @@
 <template>
-    <div :id="'echart'+index" style="width: 100%; height: 100%;"></div>
+    <div :id="'echart'+index" style="width: 100vw; height: calc(100vh - 121px);"></div>
 </template>
 
 
@@ -13,15 +13,12 @@ export default{
         'tab_name'
     ],
     mounted(){
-        this.drawChart(document.getElementById('echart'+this. index))
+        this.drawChart()
     },
     methods: {
-        drawChart(worldMapContainerInstance){
-            var resizeWorldMapContainer = function(worldMapContainer){
-                worldMapContainer.style.width = window.innerWidth + 'px'
-                worldMapContainer.style.height = window.innerHeight*0.7 + 'px'
-            }
-            resizeWorldMapContainer(worldMapContainerInstance)
+        drawChart(){
+            var chart = document.getElementById("echart" + this.index);
+            chart.style.height = "calc(100vh - 121px);";
             let myChart = this.$echarts.init(document.getElementById("echart"+this.index));
             let option = {
                 tooltip: {
@@ -35,8 +32,17 @@ export default{
                     text: 'History Data'
                 },
                 toolbox: {
+                    show: true,
+                    orient: 'horizontal',
+                    right: '10%',
+                    showTitle: true,
                     feature: {
-                        saveAsImage: {}
+                        saveAsImage: {
+                            show: true,
+                            title: '保存為圖片',
+                            type: 'jpeg',
+
+                        }
                     }
                 },
                 xAxis: {
@@ -46,7 +52,7 @@ export default{
                 },
                 yAxis: {
                     type: 'value',
-                    boundaryGap: [0,'100%']
+                    boundaryGap: [0,'20%']
                 },
                 dataZoom: [{
                     type: 'inside',
@@ -89,10 +95,9 @@ export default{
                 ]
             }
             myChart.setOption(option);
-            window.onresize = function(){
-                resizeWorldMapContainer(worldMapContainerInstance);
+            window.addEventListener('resize', () => {
                 myChart.resize();
-            }
+            })
         }
     }
 }

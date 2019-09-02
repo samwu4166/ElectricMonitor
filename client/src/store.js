@@ -194,7 +194,7 @@ export default new Vuex.Store({
     getHistoryData(context, tagname) {
       return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
         .then(res => {
-        context.commit('SET_HISTORY_DATA', res.data.msg.data);
+        context.commit('SET_HISTORY_DATA', res.data);
         //res.data.msg.data
         console.log(context.state.historyData);
       })

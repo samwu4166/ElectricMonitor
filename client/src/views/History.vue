@@ -1,7 +1,8 @@
 <template>
 <div class="history">
-    <b-card no-body>
-        <b-tabs fill card>
+    <b-card no-body class="border-0">
+        <b-tabs fill card pills
+        active-tab-class="p-0 m-0">
             <b-tab v-for="(tab, index) in tab_name" :key='index' :title='tab'>
                     <HistoryChart class="mx-auto" v-if="loaded" :tab_name="tab" :data="getTabData(tab)" :date="date" :index="index"></HistoryChart>
             </b-tab>
@@ -37,7 +38,14 @@ export default{
             var length = this.historyData.length
             var date = []
             for(var i = 0; i < length; i++){
-                date.push(this.historyData[i].datetime)
+                var now = new Date(this.historyData[i].datetime)
+                var s = (now.getSeconds() < 10 ? '0' : '') + now.getSeconds()
+                var m = (now.getMinutes() < 10 ? '0' : '') + now.getMinutes()
+                var h = (now.getHours() < 10 ? '0' : '') + now.getHours()
+                var dd = (now.getDate() < 10 ? '0' : '') + now.getDate()
+                var MM = ((now.getMonth() + 1) < 10 ? '0' : '') + (now.getMonth() + 1)
+                var yyyy = now.getFullYear()
+                date.push(yyyy+'/'+ MM + '/' + dd + ' ' + h + ':' + m + ':' + s)
             }
             return date
         },
