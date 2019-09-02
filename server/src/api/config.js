@@ -30,8 +30,10 @@ var config = {
 //     }  
 // }
 var private_key = 'BD78B9F28AF21922BECAC57EBCC3F';
+var token_expire = 300;// 5 mins
 
 module.exports = {
     config,
     private_key,
+    token_expire,
 };

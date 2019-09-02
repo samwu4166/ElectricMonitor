@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var bcrypt = require('bcrypt');
-var {config,private_key} = require('../../config');
+var {config,private_key,token_expire} = require('../../config');
 import {rowSql2Json} from '../../includes/rowsql2json';
 var redis = require("redis");
 var client = redis.createClient();
@@ -36,8 +36,8 @@ export function authenticate(req,res){
                     _auth : json_data['auth'],
                 };
                 // console.log(json_data);
-                const token = jwt.sign({ payload }, private_key, { expiresIn: 60*5 });
-                client.set(json_data['account'],token,'EX','300'); // 5 minutes
+                const token = jwt.sign({ payload }, private_key, { expiresIn: token_expire });
+                client.set(json_data['account'],token,'EX',`${token_expire}`); // 5 minutes
                 res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
                 isverify = 1;
                 
