@@ -230,10 +230,10 @@ base_url : '/api/v1'
 
 ### error code
 ```
-error code : 0 -> invalid token format,
-error code : 1 -> user single login limit,
-error code : 2 -> no permission,
-error code : 3 -> other token errors,
+error code : 0 -> invalid token format
+error code : 1 -> user single login limit
+error code : 2 -> no permission
+error code : 3 -> other token errors
 error code : 4 -> account has been suspend
 ```
 the format will be { payload -> data -> error_code}
