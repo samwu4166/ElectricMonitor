@@ -7,10 +7,10 @@ base_url : '/api/v1'
 ```javascript
 {
     method : "GET",
+    url : '/point',
     header : {
         "authorization" : "your jwt token"
     },
-    url : '/point',
     data : [
         "status": "OK",
         "msg": {
@@ -23,10 +23,10 @@ base_url : '/api/v1'
 ```javascript
 {
     method : "GET",
+    url : '/point/:tagname(1~9)',
     header : {
         "authorization" : "your jwt token"
     },
-    url : '/point/:tagname(1~9)',
     data : {
         "status": "OK",
         "msg": {
@@ -102,7 +102,7 @@ base_url : '/api/v1'
 ```javascript
 {
     method : "GET",
-    url : "user",
+    url : "/user",
     header : {
         "authorization" : "your jwt token"
     },
@@ -125,7 +125,7 @@ base_url : '/api/v1'
 ```javascript
 {
     method : "GET",
-    url : "user/:id",
+    url : "/user/:id",
     header : {
         "authorization" : "your jwt token"
     },
@@ -148,7 +148,7 @@ base_url : '/api/v1'
 {
 {
     method : "PATCH",
-    url : "user/:id",
+    url : "/user/:id",
     header : {
         "authorization" : "your jwt token"
     },

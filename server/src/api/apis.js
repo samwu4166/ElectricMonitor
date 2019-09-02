@@ -52,9 +52,15 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
                         return
                     }
                     else{
-                      if (!url.match(/point/g) && _auth!=0 ) {   // if url dont match point but permission is not admin
+                      // auth : 0->root , 1->systemAdmin , 2->client
+                      //console.log(_auth);
+                      if (!url.match(/point/g) && _auth!=0 && _auth!=1) {   // if url dont match point but permission is not admin
                         // console.log("return back permission")
-                        res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this',error_code:2}})
+                        res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this(point)',error_code:2}})
+                        return
+                      }
+                      else if(url.match(/token/g) && _auth!=0){
+                        res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this(token)',error_code:2}})
                         return
                       }
                       else {

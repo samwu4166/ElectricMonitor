@@ -5,8 +5,11 @@ import {rowSql2Json} from '../../includes/rowsql2json';
 
 function getUserList(req,res) {
   var connection = new Connection(config);
+  var payload = res.locals.decode.payload;
+  var auth = payload['_auth'];
+  //console.log(auth);
   var data_arr = []
-  var getUser = new Request(`select * from user_info`,function(err){
+  var getUser = new Request(`select account,user_info.token,status,auth from user_info,authtoken where user_info.token = authtoken.token and auth >= ${auth}`,function(err){
     if(err){
       //console.log(err);
       res.status(400).json({status:"bad request",data:{message:err}});
