@@ -114,7 +114,8 @@ base_url : '/api/v1'
             "uuid": "UID",
             "account": "ACCOUNT",
             "password": "PASSWORD",
-            "token": "ACCOUNT_TOKEN"
+            "token": "ACCOUNT_TOKEN",
+            "status": "SUSPEND_OR_OK"
         },
         ...
     }   
@@ -136,9 +137,36 @@ base_url : '/api/v1'
             "uuid": "UID",
             "account": "ACCOUNT",
             "password": "PASSWORD",
-            "token": "ACCOUNT_TOKEN"
+            "token": "ACCOUNT_TOKEN",
+            "status": "SUSPEND_OR_OK"
         },
     }   
+}
+```
+### patch user
+```javascript
+{
+{
+    method : "PATCH",
+    url : "user/:id",
+    header : {
+        "authorization" : "your jwt token"
+    },
+    payload : {
+        [ 
+            {"KEY" : "CHANEGED_VALUE"},
+            ...
+        ]
+    },
+    data : {
+        {
+            "status": "OK",
+            "data": {
+                "message": "PATCH OK"
+            }
+        }
+    }   
+}
 }
 ```
 ## login auth
@@ -177,7 +205,8 @@ base_url : '/api/v1'
         "data": {
             "message": "STATUS",
             "permission": "AUTH",
-            "token": "VALID_JWT_TOKEN"
+            "token": "VALID_JWT_TOKEN",
+            "status": "SUSPEND_OR_OK"
         }
     }   
 }
@@ -204,6 +233,7 @@ base_url : '/api/v1'
 error code : 0 -> invalid token format,
 error code : 1 -> user single login limit,
 error code : 2 -> no permission,
-error code : 3 -> other token errors
+error code : 3 -> other token errors,
+error code : 4 -> account has been suspend
 ```
 the format will be { payload -> data -> error_code}

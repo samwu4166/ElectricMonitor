@@ -5,8 +5,11 @@ var userRouter = require('./routes/user');
 var dataRouter = require('./routes/data');
 var tokenRouter = require('./routes/token');
 var authRouter = require('./routes/auth');
-var {private_key} = require('./config');
+var {private_key,config} = require('./config');
 var {logout} = require('./controllers/auth/logout')
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
+import {rowSql2Json} from './includes/rowsql2json';
 
 function verifyToken(token){
   return jwt.verify(token, private_key)
@@ -28,24 +31,44 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
       let { _auth } = decode.payload;
       //console.log(decode);
       let account = decode.payload['_account'];
-      client.get(account,function(err,replay){
-          if(replay !== req.headers.authorization.split(' ')[1]){
-              res.status(400).json({status:"bad request",data:{message:'this account has been login with other devices',error_code:1}})
-              return
-          }
-          else{
-            if (!url.match(/point/g) && _auth!=0 ) {   // if url dont match point but permission is not admin
-              // console.log("return back permission")
-              res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this',error_code:2}})
-              return
-            }
-            else {
-                res.locals.decode = decode;
-                // console.log("next")
-                next()
-            }
-          }
-      });
+      var connection = new Connection(config);
+      var accountState = 0;
+      connection.on('connect',function(err){
+        if(err){
+            console.log("account verify error : "+err);
+        }else{
+            //console.log("connected");
+            let accountStatus = new Request(`select * from user_info where account='${account}'`,(err,rowCount,rows)=>{
+                let json_data = rowSql2Json(rows[0]);
+                accountState = json_data['status'];
+                if(accountState!==1){
+                  res.status(401).json({status:"UnAuthorized", data:{message:"this account has been suspended" ,error_code:4}})
+                  return;
+                }
+                else{
+                  client.get(account,function(err,replay){
+                    if(replay !== req.headers.authorization.split(' ')[1]){
+                        res.status(400).json({status:"bad request",data:{message:'this account has been login with other devices',error_code:1}})
+                        return
+                    }
+                    else{
+                      if (!url.match(/point/g) && _auth!=0 ) {   // if url dont match point but permission is not admin
+                        // console.log("return back permission")
+                        res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this',error_code:2}})
+                        return
+                      }
+                      else {
+                          res.locals.decode = decode;
+                          // console.log("next")
+                          next()
+                      }
+                    }
+                });
+                }
+            })
+            connection.execSql(accountStatus);
+        }
+      })
   }catch(err){
       const status = 401;
       const message = `Error: access_token is not valid (${err})`;

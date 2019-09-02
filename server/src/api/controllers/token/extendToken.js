@@ -14,6 +14,6 @@ export function extendToken(req,res,next){
     //console.log(payload);
     // payload = { _account , _auth }
     const token = jwt.sign({ payload }, private_key, { expiresIn: token_expire });
-    client.set(payload['_account'],token,'EX',`${token_expire}`); // 5 min
+    client.set(payload['_account'],token,'EX',`${token_expire}`); 
     res.status(200).json({status:"OK",data:{message:'extends success!',permission:payload['_auth'],token:token}});
 }

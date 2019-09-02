@@ -18,7 +18,7 @@ export function authenticate(req,res){
     let body = req.body;
     var connection = new Connection(config);
     let isverify = 1;
-    var authaccount = new Request(`select uuid,account,password,auth from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
+    var authaccount = new Request(`select uuid,account,password,auth,status from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);
             res.status(400).json({status:"bad request",data:{message:err}});
@@ -30,20 +30,24 @@ export function authenticate(req,res){
         }
         else{
             let json_data = rowSql2Json(rows[0]);
+            //console.log(json_data);
             if(bcrypt.compareSync(password, json_data['password'])){
+                if(json_data['status']===0){
+                    res.status(403).json({status:"Forbidden",data:{message:'Login failed! Account has been suspended',error_code:4}});
+                    return;
+                }
                 const payload = {
                     _account : json_data['account'],
                     _auth : json_data['auth'],
                 };
                 // console.log(json_data);
                 const token = jwt.sign({ payload }, private_key, { expiresIn: token_expire });
-                client.set(json_data['account'],token,'EX',`${token_expire}`); // 5 minutes
+                client.set(json_data['account'],token,'EX',`${token_expire}`);
                 res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
                 isverify = 1;
-                
             }
             else{
-                res.status(400).json({status:"Bad Request",data:{message:'Login failed! password wrong'}});
+                res.status(403).json({status:"Forbidden",data:{message:'Login failed! password wrong'}});
                 isverify = 0;
             }
         }
