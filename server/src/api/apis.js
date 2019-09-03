@@ -36,12 +36,14 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
       connection.on('error',function(err){
         if(err){
           console.log("connection failed ! msg:"+err);
-          res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}})
+          //res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+        
         }
       })
       connection.on('connect',function(err){
         if(err){
             console.log("account verify error : "+err);
+            res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
         }else{
             //console.log("connected");
             let accountStatus = new Request(`select * from user_info where account='${account}'`,(err,rowCount,rows)=>{
