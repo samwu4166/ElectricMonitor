@@ -146,7 +146,6 @@ base_url : '/api/v1'
 ### patch user
 ```javascript
 {
-{
     method : "PATCH",
     url : "/user/:id",
     header : {
@@ -166,7 +165,6 @@ base_url : '/api/v1'
             }
         }
     }   
-}
 }
 ```
 ## login auth
