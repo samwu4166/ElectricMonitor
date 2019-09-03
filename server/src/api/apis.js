@@ -89,10 +89,5 @@ api_router.use('/token',tokenRouter);
 api_router.use('/auth',authRouter);
 
 api_router.post('/logout', logout);
-api_router.get('/', (req, res) => {
-    res.send({
-      message: 'Hello from the API version 1',
-    });
-});
 
 module.exports = api_router;
