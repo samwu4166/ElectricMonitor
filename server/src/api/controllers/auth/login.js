@@ -12,7 +12,6 @@ export function authenticate(req,res){
         res.status(400).json({status:"bad request",data:{message:err}});
         return;
     });
-    console.log(req.ip);
     let account = req.body.account;
     let password = req.body.password;
     let body = req.body;

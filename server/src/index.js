@@ -6,15 +6,15 @@ var apiRouter = require('./api/apis');
 
 var app = express();
 var port = 8080;
-// view engine setup
-
+//remove limit of listener handler
+require('events').EventEmitter.defaultMaxListeners = 0;
 //swap jade for ejs etc
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(function(req, res, next) {
-  // console.log("get request");
+  console.log("get request : "+req.ip);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

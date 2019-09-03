@@ -16,7 +16,7 @@ function verifyToken(token){
 }
 // valid header authorization = Bearer+" "+token
 api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
-  console.log(req.ip);
+  //console.log(req.ip);
   var redis = require("redis");
   var client = redis.createClient();
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer'){
