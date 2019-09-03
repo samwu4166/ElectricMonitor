@@ -11,9 +11,9 @@ import VueRouter from 'vue-router';
 import Clipboard from 'v-clipboard';
 import echarts from "echarts";
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (store.getters.loggedIn && !store.getters.expireTimeoutExist) {
-    store.dispatch('expireReRegister');
+    await store.dispatch('expireReRegister');
   }
   if(to.matched.some(record => record.meta.requiresAuth)){
     if(!store.getters.loggedIn){

@@ -2,7 +2,7 @@ let axios = require('axios');
 import store from './store'
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: 'http://140.115.54.57:8080/api/v1',
     params: {}
     //http://172.20.10.2:8080/api/v1
     //http://192.168.50.244:8080/api/v1
@@ -10,15 +10,13 @@ const axiosInstance = axios.create({
 
 //real-time data request
 export const apiDataRequest = token => {
-    //axiosInstance.defaults.headers.common['authorization'] = token;
-    //return axiosInstance.get('/point');
-    return axiosInstance.get('/result');
+    axiosInstance.defaults.headers.common['authorization'] = token;
+    return axiosInstance.get('/point');
 }
 //history data request
 export const apiHistoryDataRequest = (token, tagname) => {
     axiosInstance.defaults.headers.common['authorization'] = token;
-    //return axiosInstance.get(`/point/${ tagname }`);
-    return axiosInstance.get('/data')
+    return axiosInstance.get(`/point/${ tagname }`);
 }
 
 ///api/point/mssql

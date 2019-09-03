@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="home">
-      <b-alert id="alert" :show="error404" variant="danger">
+      <b-alert id="alert" v-if="error404" variant="danger">
         Express server down. Please contect server administrator for any help.
       </b-alert>
       <b-table sticky-header="calc(100%)" responsive v-if="!error404" :items="chartdata" :fields="fields" @row-clicked="rowClickHandler"></b-table>
@@ -14,8 +14,6 @@
 import { mapState } from 'vuex'
 export default {
   name: 'home',
-  components: {
-  },
   mounted(){
     this.getData();
   },
@@ -39,9 +37,9 @@ export default {
   }),
   methods: {
     async getData(){
-      await this.$store.dispatch('getData');
+      await this.$store.dispatch('getData')
       this.chartdata = []
-      //this.data.msg.data.foeeach
+      //this.data.msg.data.foreach
       this.data?this.data.forEach(da => {
 
         da['_cellVariants'] = {}
@@ -56,7 +54,6 @@ export default {
       }):(null)
 
       this.loaded = true
-
       this.timeout = setTimeout(() => {
         this.getData();
       }, 10000);
@@ -79,7 +76,6 @@ export default {
   ])
   },
   beforeDestroy: function(){
-    console.log("test")
     this.timeout && clearTimeout(this.timeout);
   }
 }

@@ -117,9 +117,9 @@ export default new Vuex.Store({
         if (context.getters.getAccessToken) {
           context.commit('SET_ACCESS_TOKEN', response.data.data.token);
           VueCookies.set('access_token', response.data.data.token);
-          context.commit('SET_EXPIRETIMEOUT',setTimeout(() => {
-            context.dispatch('expireReRegister');
-          }, 600000))
+          context.commit('SET_EXPIRETIMEOUT',setTimeout(async () => {
+            await context.dispatch('expireReRegister');
+          }, 5555))
         }
       })
       .catch(error => {
@@ -129,7 +129,6 @@ export default new Vuex.Store({
     key_generation(context, permission) {
       return apiUserRegisterKeyGeneration('Bearer ' + context.getters.getAccessToken, permission)
         .then(response => {
-          console.log(response)
           context.commit('SET_BACKEND_KEYGENERATION_KEY', response.data.data.valid_token)
           context.commit('SET_BACKEND_KEYGENERATION_PERMISSION', response.data.data.auth)
         })
@@ -144,12 +143,10 @@ export default new Vuex.Store({
       context.commit('SET_REGISTERINFO', {username, password, verifyToken})
       return apiRegisterAuth()
       .then(response => {
-        console.log(response)
       })
       .catch(error => {
           console.log(error)
       })
-
     },
     destroyAccessToken(context){
       if(context.getters.loggedIn){
@@ -171,7 +168,6 @@ export default new Vuex.Store({
       var username = credentials.username
       var password = credentials.password
       context.commit('SET_USER',{ username, password});
-
       return apiLoginAuth()
       .then(response => {
         context.commit('SET_ACCESS_TOKEN', response.data.data.token);
@@ -183,23 +179,23 @@ export default new Vuex.Store({
     getData(context) {
       return apiDataRequest('Bearer ' + context.getters.getAccessToken)
       .then(res => {
-        context.commit('SET_DATA', res.data);
+        context.commit('SET_DATA', res.data.msg.data);
         context.commit('SET_ERROR404', false);
       })
         .catch(err => {
-          console.log(err);
           context.commit('SET_ERROR404', true);
       });
     },
     getHistoryData(context, tagname) {
       return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
         .then(res => {
-        context.commit('SET_HISTORY_DATA', res.data);
+        context.commit('SET_HISTORY_DATA', res.data.msg.data);
+        context.commit('SET_ERROR404', false);
         //res.data.msg.data
-        console.log(context.state.historyData);
       })
       .catch(error => {
         console.log(error);
+        context.commit('SET_ERROR404', true);
       })
     }
   }

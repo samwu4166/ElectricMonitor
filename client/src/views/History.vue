@@ -1,10 +1,13 @@
 <template>
 <div class="history">
-    <b-card no-body class="border-0">
+    <b-alert id="alert" :show="error404" variant="danger">
+        Express server Down
+    </b-alert>
+    <b-card v-if="loaded && !error404" no-body class="border-0">
         <b-tabs fill card pills
         active-tab-class="p-0 m-0">
             <b-tab v-for="(tab, index) in tab_name" :key='index' :title='tab'>
-                    <HistoryChart class="mx-auto" v-if="loaded" :tab_name="tab" :data="getTabData(tab)" :date="date" :index="index"></HistoryChart>
+                    <HistoryChart class="mx-auto" :tab_name="tab" :data="getTabData(tab)" :date="date" :index="index"></HistoryChart>
             </b-tab>
         </b-tabs>
     </b-card>
@@ -50,13 +53,12 @@ export default{
             return date
         },
     ...mapState([
-        'historyData'
+        'historyData','error404'
     ])
     },
     methods: {
         async getHistoryData(){
             await this.$store.dispatch('getHistoryData', this.$route.params.tagname);
-            console.log(this.historyData)
             this.loaded = true
         },
         getTabData(tab_name){
@@ -73,5 +75,12 @@ export default{
 <style>
 .history{
     height: 100%;
+}
+#alert{
+  max-width:80%;
+  border-radius:5px;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

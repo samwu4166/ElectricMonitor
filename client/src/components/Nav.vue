@@ -51,7 +51,7 @@ export default{
             this.$router.push('/home')
         },
         onManagementClick(){
-            this.$router.push('./backendManagement')
+            this.$router.push('/backendManagement')
         }
     }
 }
