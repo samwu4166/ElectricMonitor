@@ -4,6 +4,7 @@ var { config } = require('../../config');
 export function getInterval(req,res){
     let tag_name = req.params.tagname;
     if(tag_name==undefined){
+        console.log("client not assign value");
         res.status(400).json({status:'Bad Request',msg:'no assign variable'})
         return
     }
