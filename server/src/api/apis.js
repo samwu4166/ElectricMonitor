@@ -33,6 +33,12 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
       let account = decode.payload['_account'];
       var connection = new Connection(config);
       var accountState = 0;
+      connection.on('error',function(err){
+        if(err){
+          console.log("connection failed ! msg:"+err);
+          res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}})
+        }
+      })
       connection.on('connect',function(err){
         if(err){
             console.log("account verify error : "+err);

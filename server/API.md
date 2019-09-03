@@ -235,5 +235,6 @@ error code : 1 -> user single login limit
 error code : 2 -> no permission
 error code : 3 -> other token errors
 error code : 4 -> account has been suspend
+error code : 5 -> sql connection lost
 ```
 the format will be { payload -> data -> error_code}
