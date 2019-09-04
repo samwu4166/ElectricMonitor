@@ -29,14 +29,14 @@ function getUserList(req,res) {
   });   
   connection.on('error',function(err){
     if(err){
-      console.log("connection failed ! msg:"+err);
-      //res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+      console.log("connection failed ! message:"+err);
+      //res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
 next()
     }
   })
   connection.on('connect',function(err){
     if(err){
-      res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+      res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
     }
     else{
      connection.execSql(getUser);
@@ -64,15 +64,15 @@ function getUser(req,res){
   })
   connection.on('error',function(err){
     if(err){
-      console.log("connection failed ! msg:"+err);
-      //res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+      console.log("connection failed ! message:"+err);
+      //res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
 next()
     }
   })
   connection.on('connect',function(err){
       if(err){
           console.log(err);
-          res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+          res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
       }else{
           console.log("connected");
           connection.execSql(authaccount);

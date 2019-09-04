@@ -1,7 +1,13 @@
 # API documemt
 
 base_url : '/api/v1'
-
+general_response :
+```javascript
+{
+    "status",
+    "message"
+}
+```
 ## point
 ### get realtime point
 ```javascript
@@ -13,7 +19,7 @@ base_url : '/api/v1'
     },
     data : [
         "status": "OK",
-        "msg": {
+        "data": {
             "tagname": "All",
             "data": []
         }
@@ -29,7 +35,7 @@ base_url : '/api/v1'
     },
     data : {
         "status": "OK",
-        "msg": {
+        "data": {
             "tagname": "All",
             "data":[]
     }

@@ -5,7 +5,7 @@ export function getInterval(req,res){
     let tag_name = req.params.tagname;
     if(tag_name==undefined){
         console.log("client not assign value");
-        res.status(400).json({status:'Bad Request',msg:'no assign variable'})
+        res.status(400).json({status:'Bad Request',message:'no assign variable'})
         return
     }
     var connection = new Connection(config);
@@ -15,7 +15,7 @@ export function getInterval(req,res){
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
           console.log(err);
-          res.status(400).json({status:'Bad Request',msg:'error with query'})
+          res.status(400).json({status:'Bad Request',message:'error with query'})
           return
         } 
     })
@@ -29,18 +29,18 @@ export function getInterval(req,res){
     });
     request.on('doneInProc', function (rowCount, more, rows) {  
       //console.log('doneInProc: '+ rowCount + ' row(s) returned');
-      res.status(200).json({status:"OK",msg:{tagname:tag_name,data:data_arr}});
+      res.status(200).json({status:"OK",data:{tagname:tag_name,data:data_arr}});
     });
     connection.on('error',function(err){
       if(err){
-        console.log("connection failed ! msg:"+err);
-        //res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+        console.log("connection failed ! message:"+err);
+        //res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
       }
     })   
     connection.on('connect', function(err) {
         if(err){
             console.log(err)
-            res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:5}});
+            res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
         }else{
             connection.execSql(request);
         }
