@@ -122,9 +122,9 @@ general_response :
     },
     data : ［
         {
-            "uuid": "UID",
+            
             "account": "ACCOUNT",
-            "password": "PASSWORD",
+            "auth": "auth",
             "token": "ACCOUNT_TOKEN",
             "status": "SUSPEND_OR_OK"
         },
@@ -145,9 +145,9 @@ general_response :
     },
     data : {
         {
-            "uuid": "UID",
+            
             "account": "ACCOUNT",
-            "password": "PASSWORD",
+            "auth": "auth",
             "token": "ACCOUNT_TOKEN",
             "status": "SUSPEND_OR_OK"
         },
