@@ -163,10 +163,10 @@ general_response :
         "authorization" : "your jwt token"
     },
     payload : {
-        [ 
-            {"KEY" : "CHANEGED_VALUE"},
+        
+            "KEY" : "CHANEGED_VALUE",
             ...
-        ]
+        
     },
     data : {
         {
