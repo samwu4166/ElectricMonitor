@@ -14,12 +14,7 @@ export function extendToken(req,res,next){
     //console.log(payload);
     // payload = { _account , _auth }
     const token = jwt.sign({ payload }, private_key, { expiresIn: token_expire });
-    var timeoutId = setTimeout(()=>{
-        res.status(503).json({status:'Service unavailable',data:{msg:"redis server error",error_code:6}}).end();
-        client.end(true);
-    },5000);
     client.set(payload['_account'],token,'EX',`${token_expire}`,function(err,reply){
-        clearTimeout(timeoutId);
         if(err){
             console.log(err);
         }

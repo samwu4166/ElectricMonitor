@@ -66,6 +66,10 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
                   },5000);
                   client.get(account,function(err,reply){
                     clearTimeout(timeoutId);
+                    if(err){
+                      console.log(err);
+                      return;
+                    }
                     if(reply !== req.headers.authorization.split(' ')[1]){
                         console.log(`single login error return \n repli:${reply}  \n req:${req.headers.authorization.split(' ')[1]}`)
                         res.status(400).json({status:"bad request",data:{message:'this account has been login with other devices',error_code:1}})
