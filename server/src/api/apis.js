@@ -18,7 +18,12 @@ function verifyToken(token){
 api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
   //console.log(req.ip);
   var redis = require("redis");
+  
   var client = redis.createClient();
+  client.on('error',function(err){
+    console.log("redis error occured : "+err);
+    return;
+  })
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer'){
     const status = 401
     const message = 'Bad authorization header'
@@ -55,7 +60,12 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
                   return;
                 }
                 else{
+                  var timeoutId = setTimeout(()=>{
+                    res.status(503).json({status:'Service unavailable',data:{msg:"redis server error",error_code:6}}).end();
+                    client.end(true);
+                  },5000);
                   client.get(account,function(err,reply){
+                    clearTimeout(timeoutId);
                     if(reply !== req.headers.authorization.split(' ')[1]){
                         console.log(`single login error return \n repli:${reply}  \n req:${req.headers.authorization.split(' ')[1]}`)
                         res.status(400).json({status:"bad request",data:{message:'this account has been login with other devices',error_code:1}})

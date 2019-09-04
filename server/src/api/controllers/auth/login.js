@@ -4,13 +4,13 @@ var Request = require('tedious').Request;
 var bcrypt = require('bcryptjs');
 var {config,private_key,token_expire} = require('../../config');
 import {rowSql2Json} from '../../includes/rowsql2json';
-var redis = require("redis");
-var client = redis.createClient();
-export function authenticate(req,res){
+import { resolve } from 'dns';
+
+export async function authenticate(req,res,next){
+    var redis = require("redis");
+    var client = redis.createClient();
     client.on("error", function (err) {
         console.log("Error " + err);
-        res.status(400).json({status:"bad request",data:{message:err}});
-        return;
     });
     let account = req.body.account;
     let password = req.body.password;
@@ -41,9 +41,21 @@ export function authenticate(req,res){
                 };
                 // console.log(json_data);
                 const token = jwt.sign({ payload }, private_key, { expiresIn: token_expire });
-                client.set(json_data['account'],token,'EX',`${token_expire}`);
-                res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
-                isverify = 1;
+                var timeoutId = setTimeout(()=>{
+                    res.status(503).json({status:'Service unavailable',data:{msg:"redis server error",error_code:6}}).end();
+                    client.end(true);
+                },5000);
+                client.set(json_data['account'],token,'EX',`${token_expire}`,function(err,reply){
+                    if(err){
+                        console.log(err);
+                        //res.status(503).json({status:'Service unavailable',data:{msg:err,error_code:6}});
+                    }
+                    else{
+                        res.status(200).json({status:"OK",data:{message:'Login success!',permission:json_data['auth'],token:token}});
+                        clearTimeout(timeoutId);
+                        isverify = 1;
+                    }
+                });
             }
             else{
                 res.status(403).json({status:"Forbidden",data:{message:'Login failed! password wrong'}});
