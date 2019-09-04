@@ -27,7 +27,6 @@ export function getToken(req,res){
       if(err){
         console.log("connection failed ! message:"+err);
         //res.status(503).json({status:'Service unavailable',data:{message:err,error_code:5}});
-next()
       }
     }) 
     connection.on('connect', function(err) {
