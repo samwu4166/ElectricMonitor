@@ -120,7 +120,7 @@ general_response :
     payload : {
         "token" : "VALID_TOKEN",
     },
-    data : {
+    data : ［
         {
             "uuid": "UID",
             "account": "ACCOUNT",
@@ -129,7 +129,7 @@ general_response :
             "status": "SUSPEND_OR_OK"
         },
         ...
-    }   
+    ］   
 }
 ```
 ### get specify clients
