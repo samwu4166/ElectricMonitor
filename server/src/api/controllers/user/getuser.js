@@ -12,7 +12,7 @@ function getUserList(req,res) {
   var getUser = new Request(`select account,user_info.token,status,auth from user_info,authtoken where user_info.token = authtoken.token and auth >= ${auth}`,function(err){
     if(err){
       //console.log(err);
-      res.status(400).json({status:"bad request",data:{message:err}});
+      res.status(400).json({status:"bad request",data:{message:err,error_code:51}});
     }
   })
 

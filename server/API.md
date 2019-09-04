@@ -5,7 +5,12 @@ general_response :
 ```javascript
 {
     "status",
-    "message"
+    "data":{
+        "message",
+        "data",
+        "error_code",
+        ...
+    }
 }
 ```
 ## point
@@ -237,9 +242,12 @@ general_response :
 error code : 0 -> invalid token format
 error code : 1 -> user single login limit
 error code : 2 -> no permission
-error code : 3 -> other token errors
+error code : 3 -> invalid token
 error code : 4 -> account has been suspend
-error code : 5 -> sql connection lost
-error code : 6 -> redis connection lost
+error code : 5 -> sql connection lost or failure
+error code : 51 -> sql query error
+error code : 6 -> redis connection lost or redis error
+error code : 7 -> login denied (account wrong or password wrong)
+error code : 8 -> register denied (duplicate or something)
 ```
 the format will be { payload -> data -> error_code}

@@ -5,7 +5,7 @@ export function getInterval(req,res){
     let tag_name = req.params.tagname;
     if(tag_name==undefined){
         console.log("client not assign value");
-        res.status(400).json({status:'Bad Request',message:'no assign variable'})
+        res.status(400).json({status:'Bad Request',message:'no assign variable',error_code:51})
         return
     }
     var connection = new Connection(config);
@@ -15,7 +15,7 @@ export function getInterval(req,res){
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
           console.log(err);
-          res.status(400).json({status:'Bad Request',message:'error with query'})
+          res.status(400).json({status:'Bad Request',message:'error with query',error_code:51})
           return
         } 
     })

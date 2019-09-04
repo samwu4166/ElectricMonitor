@@ -20,11 +20,11 @@ export async function authenticate(req,res,next){
     var authaccount = new Request(`select uuid,account,password,auth,status from user_info,authtoken where user_info.token=authtoken.token and account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);
-            res.status(400).json({status:"bad request",data:{message:err}});
+            res.status(400).json({status:"bad request",data:{message:err,error_code:5}});
             isverify = 0;
         }
         else if(!rowCount){
-            res.status(400).json({status:"bad request",data:{message:"no matched account"}});
+            res.status(400).json({status:"bad request",data:{message:"no matched account",error_code:7}});
             isverify = 0;
         }
         else{
@@ -58,7 +58,7 @@ export async function authenticate(req,res,next){
                 });
             }
             else{
-                res.status(403).json({status:"Forbidden",data:{message:'Login failed! password wrong'}});
+                res.status(403).json({status:"Forbidden",data:{message:'Login failed! password wrong',error_code:7}});
                 isverify = 0;
             }
         }

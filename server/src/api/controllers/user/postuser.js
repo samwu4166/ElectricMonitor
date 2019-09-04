@@ -20,12 +20,12 @@ export function postUser(req,res){
         if (err) {
           tokencontinue=0;
           console.log(err);
-          res.status(400).json({status:"bad request",data:{message:err}});
+          res.status(400).json({status:"bad request",data:{message:err,error_code:51}});
         }
         else if(!rowCount){
           tokencontinue=0;
           //console.log("error checktoken")
-          res.status(400).json({status:"bad request",data:{message:'you can not use this token to build account'}});
+          res.status(400).json({status:"bad request",data:{message:'you can not use this token to build account',error_code:3}});
        }
     })
   
@@ -39,12 +39,12 @@ export function postUser(req,res){
         if(err){
           accountcontinue = 0;
           console.log(err);
-          res.status(400).json({status:"bad request",data:{message:err}});
+          res.status(400).json({status:"bad request",data:{message:err,error_code:51}});
         }
         else if(rowCount){
           accountcontinue = 0;
           //console.log("error checkacount")
-          res.status(400).json({status:"bad request",data:{message:'duplicate account !'}});
+          res.status(400).json({status:"bad request",data:{message:'duplicate account !',error_code:8}});
         }
       })
       checkaccount.on('requestCompleted',async function(){
@@ -59,7 +59,7 @@ export function postUser(req,res){
               //console.log("create account start");
               if(err){
                   console.log(err);
-                  res.status(400).json({status:"bad request",data:{message:err}});
+                  res.status(400).json({status:"bad request",data:{message:err,error_code:51}});
               }
           })
           createaccount.on('requestCompleted',function(){
@@ -69,7 +69,7 @@ export function postUser(req,res){
                   function(err){
                     if(err){
                       console.log(err);
-                      res.status(400).json({status:"bad request",data:{message:err}});
+                      res.status(400).json({status:"bad request",data:{message:err,error_code:51}});
                     }else{
                       res.status(200).json({status:"OK",data:{message:"create user successfully"}});
                     }

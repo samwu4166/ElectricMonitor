@@ -15,14 +15,14 @@ export function logout(req,res,next){
     client.get(payload['_account'], function(err,reply){
         if(reply===null){
             //console.log("null account to be deleted");
-            res.status(400).json({status:"bad request",data:{message:"this account is unavailable"}});
+            res.status(400).json({status:"bad request",data:{message:"null key in redis",error_code:6}});
             return;
         }
         else{
             client.del(payload['_account'], function(err,reply){
                 if(err){
                     console.log("Error " + err);
-                    res.status(400).json({status:"bad request",data:{message:err}});
+                    res.status(400).json({status:"bad request",data:{message:err,error_code:6}});
                     return;
                 }
                 else{

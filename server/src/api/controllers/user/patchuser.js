@@ -12,7 +12,7 @@ function patchUser(req,res){
     var patchUser = new Request(`Update user_info set ${key} = ${object[key]} where account = '${account}'`,function(err,rowCount,rows){
         if(err){
             console.log(err);
-            res.status(400).json({status:"bad request",data:{message:err}});
+            res.status(400).json({status:"bad request",data:{message:err,error_code:51}});
         }
         else{
             res.status(200).json({status:"OK",data:{message:"PATCH OK"}});

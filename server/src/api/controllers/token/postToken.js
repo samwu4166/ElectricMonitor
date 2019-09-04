@@ -12,7 +12,7 @@ export function postToken(req,res){
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
           console.log(err);
-          res.status(400).json({status:"bad request",data:{message:err}})
+          res.status(400).json({status:"bad request",data:{message:err,error_code:51}})
         } 
     })
     request.on('doneInProc', function (rowCount, more, rows) {  
