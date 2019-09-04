@@ -7,11 +7,7 @@ import {rowSql2Json} from '../../includes/rowsql2json';
 import { resolve } from 'dns';
 
 export async function authenticate(req,res,next){
-    var redis = require("redis");
-    var client = redis.createClient();
-    client.on("error", function (err) {
-        console.log("Error " + err);
-    });
+    
     let account = req.body.account;
     let password = req.body.password;
     let body = req.body;
@@ -41,6 +37,11 @@ export async function authenticate(req,res,next){
                 };
                 // console.log(json_data);
                 const token = jwt.sign({ payload }, private_key, { expiresIn: token_expire });
+                var redis = require("redis");
+                var client = redis.createClient();
+                client.on("error", function (err) {
+                    console.log("Error " + err);
+                });
                 var timeoutId = setTimeout(()=>{
                     res.status(503).json({status:'Service unavailable',data:{message:"redis server error",error_code:6}}).end();
                     client.end(true);

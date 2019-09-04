@@ -17,13 +17,7 @@ function verifyToken(token){
 // valid header authorization = Bearer+" "+token
 api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
   //console.log(req.ip);
-  var redis = require("redis");
-  
-  var client = redis.createClient();
-  client.on('error',function(err){
-    console.log("redis error occured : "+err);
-    return;
-  })
+
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer'){
     const status = 401
     const message = 'Bad authorization header'
@@ -60,6 +54,12 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
                   return;
                 }
                 else{
+                  var redis = require("redis");
+                  var client = redis.createClient();
+                  client.on('error',function(err){
+                    console.log("redis error occured : "+err);
+                    return;
+                  })
                   var timeoutId = setTimeout(()=>{
                     res.status(503).json({status:'Service unavailable',data:{message:"redis server error",error_code:6}}).end();
                     client.end(true);
