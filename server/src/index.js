@@ -31,7 +31,7 @@ app.enable('trust proxy',true);
 // visit spa
 app.use('/api/v1', apiRouter);
 app.get('*',function(req,res){
-   res.sendStatus(404);
+   res.send("Hello app_project !");
 })
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,7 +2,7 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var { config } = require('../../config');
 const uuidv1 = require('uuid/v1');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 export function postUser(req,res){
