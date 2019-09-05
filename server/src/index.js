@@ -1,20 +1,35 @@
 var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var morgan = require('morgan');
 var apiRouter = require('./api/apis');
-
+var moment = require('moment');
+import {logger} from './api/controllers/logger/log';
 var app = express();
 var port = 8080;
 //remove limit of listener handler
 require('events').EventEmitter.defaultMaxListeners = 0;
 //swap jade for ejs etc
-app.use(logger('dev'));
+app.use(morgan(function (tokens, req, res) {
+  const returnList = [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens['response-time'](req, res), 'ms',
+    moment().format('YYYY-MM-DDTHH:mm:ss'),
+    req.ip
+  ].join(' ');
+  logger(returnList);
+  return returnList;
+},{ // skip options log
+  skip : function(req,res){
+      return req.method == 'OPTIONS';
+  }
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(function(req, res, next) {
-  console.log("get request : "+req.ip);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
