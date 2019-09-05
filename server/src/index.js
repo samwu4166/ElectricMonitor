@@ -15,12 +15,12 @@ app.use(morgan(function (tokens, req, res) {
     tokens.method(req, res),
     tokens.url(req, res),
     tokens.status(req, res),
-    tokens['response-time'](req, res), 'ms',
+    tokens['response-time'](req, res),
     moment().format('YYYY-MM-DDTHH:mm:ss'),
     req.ip
-  ].join(' ');
+  ];
   logger(returnList);
-  return returnList;
+  return returnList.join(' ');
 },{ // skip options log
   skip : function(req,res){
       return req.method == 'OPTIONS';

@@ -4,8 +4,7 @@ var { config } = require('../../config');
 
 export function logger(logList){
     var connection = new Connection(config);
-    let sql_str = `insert into logger (method,url,status,response_time,ip,request_datetime) values ('${logList[0]}','${logList[1]}','${logList[2]}','${logList[3]}','${logList[4]}','${logList[5]}')`;
-    console.log(logList);
+    let sql_str = `insert into logger (method,url,status,response_time,request_datetime,ip) values ('${logList[0]}','${logList[1]}','${logList[2]}','${logList[3]}','${logList[4]}','${logList[5]}')`;
     var request = new Request(sql_str,function(err, rowCount){
         if (err) {
           console.log(err);
@@ -22,7 +21,7 @@ export function logger(logList){
             console.log(err)
         }else{
             //console.log('connected to mssql .')
-            //connection.execSql(request);
+            connection.execSql(request);
         }
     });
 }
