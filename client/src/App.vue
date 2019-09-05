@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <Nav></Nav>
+    <Alert id="alert"></Alert>
     <router-view id="router"></router-view>
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav.vue'
+import Alert from './components/Alert'
 export default {
   components:{
-    Nav
+    Nav, Alert
   }
 }
 </script>
@@ -31,6 +33,11 @@ html, body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+#alert {
+  margin-top:56px;
+  width:100%;
+  max-width: 100%;
 }
 #router {
   margin-top:56px;

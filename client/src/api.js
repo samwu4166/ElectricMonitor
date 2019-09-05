@@ -3,10 +3,23 @@ import store from './store'
 
 const axiosInstance = axios.create({
     baseURL: 'http://140.115.54.57:8080/api/v1',
-    params: {}
+    params: {},
+    timeout: 10000
     //http://172.20.10.2:8080/api/v1
     //http://192.168.50.244:8080/api/v1
 });
+
+axiosInstance.interceptors.response.use(res => {
+    store.commit('SET_ERROR_STATUS', null);
+    return res;
+}, err => {
+    if(err.code === 'ECONNABORTED'){
+        store.commit('SET_ERROR_STATUS', 'timeout');
+    }
+    store.commit('SET_ERROR_STATUS', err.response.data.data.error_code);
+
+    return Promise.reject(err);
+})
 
 //real-time data request
 export const apiDataRequest = token => {
@@ -34,7 +47,17 @@ export const apiLogout = token => {
 //backend generate key
 export const apiUserRegisterKeyGeneration = (token, permission) => {
     axiosInstance.defaults.headers.common['authorization'] = token;
-    return axiosInstance.post('/token', { "id": permission });
+    return axiosInstance.post(`/token/${permission}`);
+}
+//get all users account below current account permission
+export const apiGetClients = token => {
+    axiosInstance.defaults.headers.common['authorization'] = token;
+    return axiosInstance.get('/user');
+}
+//suspend a user using patch req
+export const apiPatchClient = (token, data) => {
+    axiosInstance.defaults.headers.common['authorization'] = token;
+    return axiosInstance.patch(`/user/${data.account}`, data.payload);
 }
 
 

@@ -1,14 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
-import {apiHistoryDataRequest, apiTokenReRegisterAuth, apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout, apiUserRegisterKeyGeneration} from "./api.js"
-import Axios from 'axios';
+import {apiPatchClient, apiGetClients, apiHistoryDataRequest, apiTokenReRegisterAuth, apiDataRequest, apiLoginAuth, apiRegisterAuth, apiLogout, apiUserRegisterKeyGeneration} from "./api.js"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    error404: false,
+    errorStatus: null,
     data: null,
     historyData: null,
     timeout: 0,
@@ -20,6 +19,8 @@ export default new Vuex.Store({
       permission: VueCookies.get('permission') || null,
       access_token: VueCookies.get('access_token') || null
     },
+    //all users info
+    userList: null,
     registerInfo: {
       verifyToken: null,
       username: null,
@@ -33,14 +34,17 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getError404: state => {
-      return state.error404;
+    getErrorStatus: state => {
+      return state.errorStatus;
     },
     getUser: state => {
       return {
         account: state.user.username,
         password: state.user.password
       }
+    },
+    getUserList: state => {
+      return state.userList;
     },
     loggedIn(state) {
       return state.user.access_token !== null;
@@ -69,8 +73,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    SET_ERROR404(state, error) {
-      state.error404 = error;
+    SET_ERROR_STATUS(state, error) {
+      state.errorStatus = error;
     },
     SET_DATA (state, data){
       state.data = data;
@@ -87,6 +91,9 @@ export default new Vuex.Store({
     SET_USER(state, { username, password }){
       state.user.username = username;
       state.user.password = password;
+    },
+    SET_USER_LIST(state, userList){
+      state.userList = userList;
     },
     SET_ACCESS_TOKEN(state, access_token){
       state.user.access_token = access_token;
@@ -123,7 +130,10 @@ export default new Vuex.Store({
         }
       })
       .catch(error => {
-        console.log(error);
+        console.log(error)
+        context.commit('SET_EXPIRETIMEOUT',setTimeout(async () => {
+          await context.dispatch('expireReRegister');
+        }, 5555))
       })
     },
     key_generation(context, permission) {
@@ -158,6 +168,7 @@ export default new Vuex.Store({
 
         })
         .catch(error =>{
+          console.log(error)
           VueCookies.remove('access_token')
           VueCookies.remove('permission')
           context.commit('destroyAccessToken')
@@ -179,23 +190,34 @@ export default new Vuex.Store({
     getData(context) {
       return apiDataRequest('Bearer ' + context.getters.getAccessToken)
       .then(res => {
-        context.commit('SET_DATA', res.data.msg.data);
-        context.commit('SET_ERROR404', false);
+        context.commit('SET_DATA', res.data.data.data);
       })
         .catch(err => {
-          context.commit('SET_ERROR404', true);
+          console.log(err)
       });
     },
     getHistoryData(context, tagname) {
       return apiHistoryDataRequest('Bearer ' + context.getters.getAccessToken, tagname)
         .then(res => {
-        context.commit('SET_HISTORY_DATA', res.data.msg.data);
-        context.commit('SET_ERROR404', false);
+        context.commit('SET_HISTORY_DATA', res.data.data.data);
         //res.data.msg.data
       })
       .catch(error => {
-        console.log(error);
-        context.commit('SET_ERROR404', true);
+        console.log(error)
+      })
+    },
+    getUserList(context){
+      return apiGetClients('Bearer ' + context.getters.getAccessToken)
+      .then(res => {
+        context.commit('SET_USER_LIST', res.data);
+      })
+    },
+    suspendUser(context, data){
+      return apiPatchClient('Bearer ' + context.getters.getAccessToken, data)
+      .then(res => {
+      })
+      .catch(error => {
+        console.log(error)
       })
     }
   }

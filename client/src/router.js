@@ -6,6 +6,7 @@ import About from './views/About.vue'
 import Register from './views/Register.vue'
 import BackendManagement from './views/BackendManagement.vue'
 import History from './views/History.vue'
+import AccountManagement from './views/AccountManagement.vue'
 
 Vue.use(Router)
 
@@ -25,6 +26,14 @@ export default new Router({
       component: Register,
       meta: {
         requiresVisitor: true
+      }
+    },
+    {
+      path: '/accountManagement',
+      name: 'accountManagement',
+      component: AccountManagement,
+      meta: {
+        requiresAuth: true
       }
     },
     {
@@ -74,11 +83,6 @@ export default new Router({
       name: 'not_found',
       component: About
     },
-    {
-      path: '/dev',
-      name: 'dev',
-      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue'),
-    }
   ],
   mode: 'history'
 

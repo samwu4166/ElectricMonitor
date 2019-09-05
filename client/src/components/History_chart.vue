@@ -29,7 +29,7 @@ export default{
                 },
                 title: {
                     left: 'center',
-                    text: 'History Data'
+                    text: '歷史資料'
                 },
                 toolbox: {
                     show: true,

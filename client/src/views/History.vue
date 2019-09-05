@@ -1,12 +1,9 @@
 <template>
 <div class="history">
-    <b-alert id="alert" :show="error404" variant="danger">
-        Express server Down
-    </b-alert>
-    <b-card v-if="loaded && !error404" no-body class="border-0">
-        <b-tabs fill card pills
+    <b-card header-bg-variant="dark" v-if="loaded && errorStatus == null" no-body class="border-0">
+        <b-tabs fill card pills v-model="tabIndex" nav-wrapper-class="bg-dark rounded-0"
         active-tab-class="p-0 m-0">
-            <b-tab v-for="(tab, index) in tab_name" :key='index' :title='tab'>
+            <b-tab :title-link-class="tabClass(index)" v-for="(tab, index) in tab_name" :key='index' :title='tab'>
                     <HistoryChart class="mx-auto" :tab_name="tab" :data="getTabData(tab)" :date="date" :index="index"></HistoryChart>
             </b-tab>
         </b-tabs>
@@ -26,6 +23,7 @@ export default{
     },
     data: () => ({
         loaded: false,
+        tabIndex: 0,
         tab_name: ['rs_v', 'st_v', 'tr_v', 'r_a', 's_a', 't_a', 'kwh', 'pf', 'kw']
     }),
     computed: {
@@ -53,7 +51,7 @@ export default{
             return date
         },
     ...mapState([
-        'historyData','error404'
+        'historyData','errorStatus'
     ])
     },
     methods: {
@@ -68,6 +66,14 @@ export default{
                 data.push(this.historyData[i][tab_name])
             }
             return data
+        },
+        tabClass(index){
+            if(this.tabIndex === index){
+                return ['bg-white','text-dark']
+            }
+            else{
+                return ['bg-dark','text-white']
+            }
         }
     }
 }
@@ -76,7 +82,7 @@ export default{
 .history{
     height: 100%;
 }
-#alert{
+.alert{
   max-width:80%;
   border-radius:5px;
   margin-top: 5px;

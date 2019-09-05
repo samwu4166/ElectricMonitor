@@ -1,10 +1,18 @@
 <template>
   <div>
     <div class="home">
-      <b-alert id="alert" v-if="error404" variant="danger">
-        Express server down. Please contect server administrator for any help.
-      </b-alert>
-      <b-table sticky-header="calc(100%)" responsive v-if="!error404" :items="chartdata" :fields="fields" @row-clicked="rowClickHandler"></b-table>
+      <b-table
+      sticky-header="calc(100%)"
+      responsive
+      striped
+      hover
+      v-if="errorStatus == null"
+      :items="chartdata"
+      :fields="fields"
+      :busy.sync="isLoading"
+      head-variant="dark"
+      @row-clicked="rowClickHandler">
+      </b-table>
     </div>
   </div>
 </template>
@@ -15,13 +23,15 @@ import { mapState } from 'vuex'
 export default {
   name: 'home',
   mounted(){
+    this.isLoading = true
     this.getData();
+    this.isLoading = false
   },
   data: () => ({
-    loaded: false,
+    isLoading: true,
     chartdata: [],
     fields: [
-      { key: 'tagname', stickyColumn: true, isRowHeader: true, variant: 'primary' },
+      { key: 'tagname', stickyColumn: true, isRowHeader: true, variant: "dark"},
       'site',
       'kwh',
       'kw',
@@ -32,7 +42,7 @@ export default {
       's_a',
       't_a',
       'pf',
-      'datetime'
+      { key: 'datetime', label: '時間'}
     ]
   }),
   methods: {
@@ -41,19 +51,11 @@ export default {
       this.chartdata = []
       //this.data.msg.data.foreach
       this.data?this.data.forEach(da => {
-
-        da['_cellVariants'] = {}
-        var props = Object.keys(da).slice(3,12)
-        var len = props.length
-        for(var i = 0; i < len; i++){
-          if(da[props[i]] > 15){
-            da['_cellVariants'][props[i]] = 'danger'
-          }
-        }
+        var d = new Date(da.datetime.split('Z')[0])
+        da.datetime = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
         this.chartdata.push(da)
       }):(null)
 
-      this.loaded = true
       this.timeout = setTimeout(() => {
         this.getData();
       }, 10000);
@@ -72,7 +74,7 @@ export default {
     }
   },
   ...mapState([
-    'data','error404'
+    'data','errorStatus'
   ])
   },
   beforeDestroy: function(){
@@ -89,7 +91,7 @@ export default {
   overflow: auto;
   white-space: nowrap;
 }
-#alert{
+.alert{
   max-width:80%;
   border-radius:5px;
   margin-top: 5px;
