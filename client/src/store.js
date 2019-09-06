@@ -152,8 +152,6 @@ export default new Vuex.Store({
       var verifyToken = data.verifyToken
       context.commit('SET_REGISTERINFO', {username, password, verifyToken})
       return apiRegisterAuth()
-      .then(response => {
-      })
       .catch(error => {
           console.log(error)
       })
@@ -161,7 +159,7 @@ export default new Vuex.Store({
     destroyAccessToken(context){
       if(context.getters.loggedIn){
         return apiLogout('Bearer ' + context.getters.getAccessToken)
-        .then(response => {
+        .then(() => {
           VueCookies.remove('access_token')
           VueCookies.remove('permission')
           context.commit('destroyAccessToken')
@@ -214,8 +212,6 @@ export default new Vuex.Store({
     },
     suspendUser(context, data){
       return apiPatchClient('Bearer ' + context.getters.getAccessToken, data)
-      .then(res => {
-      })
       .catch(error => {
         console.log(error)
       })

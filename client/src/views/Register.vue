@@ -77,13 +77,6 @@ export default {
             .then(() => {
                 this.$router.push('/login')
             })
-            /*this.$store.dispatch('retrieveToken',{
-                username: this.username,
-                password: this.password
-            })
-            .then(response => {
-                this.$router.push('/home')
-            })*/
         }
     }
 }
