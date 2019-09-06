@@ -25,7 +25,7 @@ export default{
     methods:{
         key_generate(){
             this.$store.dispatch('key_generation', this.permission)
-            .then(response => {
+            .then(() => {
                 this.key = this.$store.getters.getBackendKeyGenerationKey
             })
         }

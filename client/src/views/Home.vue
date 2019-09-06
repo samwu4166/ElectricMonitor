@@ -60,7 +60,7 @@ export default {
         this.getData();
       }, 10000);
     },
-    rowClickHandler(record, index){
+    rowClickHandler(record){
       this.$router.push({name: 'history', params: { tagname: record.tagname[1] }})
     }
   },

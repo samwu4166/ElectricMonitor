@@ -74,7 +74,7 @@ export default {
                 password: this.password,
                 verifyToken: this.verifyToken
             })
-            .then(response => {
+            .then(() => {
                 this.$router.push('/login')
             })
             /*this.$store.dispatch('retrieveToken',{

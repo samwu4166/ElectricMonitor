@@ -39,7 +39,7 @@
                 >
                     <template slot="[selected]" slot-scope="{ rowSelected }">
                         <template v-if="rowSelected">
-                            <span aria-hidden="true">&check;</span>
+                            <span aria-hidden="true">&#10003;</span>
                             <span class="sr-only">Not selected</span>
                         </template>
                     </template>

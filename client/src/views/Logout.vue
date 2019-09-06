@@ -1,5 +1,5 @@
 <template>
-
+    <div></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { clearTimeout } from 'timers';
 export default {
     created(){
         this.$store.dispatch('destroyAccessToken')
-        .then(response => {
+        .then(() => {
             this.$router.push('/login')
         })
     },
