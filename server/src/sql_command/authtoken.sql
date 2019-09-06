@@ -1,0 +1,1 @@
+create table authtoken (token varchar(256) Not null UNIQUE,auth varchar(5) Not null,us_use varchar(5) Not null);
