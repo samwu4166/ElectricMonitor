@@ -1,65 +1,67 @@
 <template>
-  <div class="home">
-    <div v-if="loaded">
-      <b-container fluid d-flex>
-        <b-row v-for="n in 3" :key="n">
-          <b-col v-for="m in 3" :key="m">
-            <rt-barchart v-if='chartdata[(n-1)*3+m-1]' :chartData='chartdata[(n-1)*3+m-1]' :title='data[(n-1)*3+m-1]["tagname"]'></rt-barchart>
-          </b-col>
-        </b-row>
-      </b-container>
+  <div>
+    <div class="home">
+      <b-table
+      sticky-header="calc(100%)"
+      responsive
+      striped
+      hover
+      v-if="errorStatus == null"
+      :items="chartdata"
+      :fields="fields"
+      :busy.sync="isLoading"
+      head-variant="dark"
+      @row-clicked="rowClickHandler">
+      </b-table>
     </div>
-    <b-table striped hover :items="data"></b-table>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import { mapState } from 'vuex'
-import rtBarchart from '../components/Data_realtime_barchart.vue'
 export default {
   name: 'home',
-  components: {
-    rtBarchart
-  },
   mounted(){
+    this.isLoading = true
     this.getData();
+    this.isLoading = false
   },
   data: () => ({
-    loaded: false,
-    chartdata: null
+    isLoading: true,
+    chartdata: [],
+    fields: [
+      { key: 'tagname', stickyColumn: true, isRowHeader: true, variant: "dark"},
+      'site',
+      'kwh',
+      'kw',
+      'st_v',
+      'rs_v',
+      'tr_v',
+      'r_a',
+      's_a',
+      't_a',
+      'pf',
+      { key: 'datetime', label: '時間'}
+    ]
   }),
   methods: {
     async getData(){
-      await this.$store.dispatch('getData');
-      this.loaded = true
-
-      var new_chart_array = [];
-      this.data.forEach(da => {
-        const obj = {
-          labels: Object.keys(da).slice(3, 12),
-          datasets: [
-            {
-              label:da["tagname"],
-              backgroundColor: function(context){
-                var index = context.dataIndex;
-                var value = context.dataset.data[index];
-                return value < 5 ? '#F7FF00' :
-                    value < 10 ? '#FF8000' :
-                    value < 15 ? '#FF5700' :
-                    '#FF0000';
-              },
-              data: Object.values(da).slice(3, 12)
-            }
-          ]
-        }
-        new_chart_array.push(obj)
-      })
-      this.chartdata = new_chart_array;
+      await this.$store.dispatch('getData')
+      this.chartdata = []
+      //this.data.msg.data.foreach
+      this.data?this.data.forEach(da => {
+        var d = new Date(da.datetime.split('Z')[0])
+        da.datetime = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+        this.chartdata.push(da)
+      }):(null)
 
       this.timeout = setTimeout(() => {
         this.getData();
       }, 10000);
+    },
+    rowClickHandler(record){
+      this.$router.push({name: 'history', params: { tagname: record.tagname[1] }})
     }
   },
   computed: {
@@ -72,13 +74,28 @@ export default {
     }
   },
   ...mapState([
-    'data'
+    'data','errorStatus'
   ])
   },
-  beforeDestroy(){
+  beforeDestroy: function(){
     this.timeout && clearTimeout(this.timeout);
   }
 }
 </script>
+
 <style>
+.home {
+  width: 100%;
+  align-self: flex-start;
+  height: 100%;
+  overflow: auto;
+  white-space: nowrap;
+}
+.alert{
+  max-width:80%;
+  border-radius:5px;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
