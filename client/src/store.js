@@ -126,14 +126,14 @@ export default new Vuex.Store({
           VueCookies.set('access_token', response.data.data.token);
           context.commit('SET_EXPIRETIMEOUT',setTimeout(async () => {
             await context.dispatch('expireReRegister');
-          }, 5555))
+          }, 60123))
         }
       })
       .catch(error => {
         console.log(error)
         context.commit('SET_EXPIRETIMEOUT',setTimeout(async () => {
           await context.dispatch('expireReRegister');
-        }, 5555))
+        }, 60123))
       })
     },
     key_generation(context, permission) {
