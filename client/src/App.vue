@@ -1,8 +1,16 @@
 <template>
   <div id="app">
-    <Nav></Nav>
-    <Alert id="alert"></Alert>
-    <router-view id="router"></router-view>
+    <b-container fluid>
+      <b-row>
+        <Nav></Nav>
+      </b-row>
+      <b-row>
+        <Alert id="alert"></Alert>
+      </b-row>
+      <b-row>
+        <router-view id="router"></router-view>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -29,10 +37,6 @@ html, body{
   text-align: center;
   color: #2c3e50;
   height:100%;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 #alert {
   margin-top:56px;
@@ -47,7 +51,5 @@ html, body{
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /*padding-top:calc((100vh - 11.5rem)/2);     垂直置中*/
 }
 </style>

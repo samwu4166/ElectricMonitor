@@ -82,11 +82,4 @@ export default{
 .history{
     height: 100%;
 }
-.alert{
-  max-width:80%;
-  border-radius:5px;
-  margin-top: 5px;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

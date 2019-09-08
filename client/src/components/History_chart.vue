@@ -1,5 +1,5 @@
 <template>
-    <div :id="'echart'+index" style="width: 100vw; height: calc(100vh - 121px);"></div>
+    <div :id="'echart'+index" style="width: 100vw; height: calc(100vh - 161px);"></div>
 </template>
 
 

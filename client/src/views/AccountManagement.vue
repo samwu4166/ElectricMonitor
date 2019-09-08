@@ -2,7 +2,7 @@
 <div>
     <b-container fluid class="container">
         <b-row class="justify-content-center">
-            <b-col cols="12" lg="5" md="8" sm="6">
+            <b-col cols="12" lg="6" md="8" sm="6">
                 <b-form-group>
                     <b-input-group size="md">
                         <b-form-input
@@ -25,7 +25,7 @@
             </b-col>
         </b-row>
         <b-row class="justify-content-md-center">
-            <b-col col cols="12" sm="12" md="12" lg="7">
+            <b-col col cols="12" sm="12" md="12" lg="8">
                 <b-table sticky-header="500px" bordered
                 head-variant="dark"
                 :items="userList"
