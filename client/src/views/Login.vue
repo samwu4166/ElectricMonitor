@@ -1,7 +1,7 @@
 <template>
-    <div class="login">
-        <b-container fluid>
-            <b-form action="#"  @submit.prevent="login">
+    <div class="login pt-5">
+        <b-form action="#"  @submit.prevent="login" class="w-100">
+            <b-container fluid class="h-100 justify-content-center">
                 <b-row class="mb-2 justify-content-center" no-gutters>
                     <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
                         <b-form-input class="rounded-0" placeholder="帳號" v-model="username" required></b-form-input>
@@ -17,8 +17,8 @@
                         <b-button class="rounded-0" variant="dark" type="submit">登入</b-button>
                     </b-col>
                 </b-row>
-            </b-form>
-        </b-container>
+            </b-container>
+        </b-form>
     </div>
 </template>
 
@@ -48,11 +48,5 @@ export default {
 <style>
     .login {
         width: 100%;
-    }
-    .alert{
-    border-radius:5px;
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
     }
 </style>

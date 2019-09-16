@@ -4,6 +4,7 @@
             <b-navbar-brand href="#">系統</b-navbar-brand>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
+                
                 <b-navbar-nav id="home" v-if="loggedIn" class="ml-auto">
                     <b-nav-item @click="onHomeClick">首頁</b-nav-item>
                 </b-navbar-nav>

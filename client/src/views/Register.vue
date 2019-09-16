@@ -1,7 +1,7 @@
 <template>
-    <div class=register>
-        <b-container fluid>
-            <b-form action="#"  @submit.prevent="register">
+    <div class="register pt-5">
+        <b-form action="#"  @submit.prevent="register">
+            <b-container fluid>
                 <b-row class="mb-2 justify-content-center" no-gutters>
                     <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">
                         <b-form-input class="rounded-0" placeholder="輸入您的註冊碼" v-model="verifyToken"></b-form-input>
@@ -36,8 +36,8 @@
                         <b-button class="rounded-0" variant="dark" type="submit">註冊</b-button>
                     </b-col>
                 </b-row>
-            </b-form>
-        </b-container>
+            </b-container>
+        </b-form>
     </div>
 </template>
 

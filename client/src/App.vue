@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <b-container fluid>
+    <b-container fluid class="h-100">
       <b-row>
         <Nav></Nav>
       </b-row>
       <b-row>
         <Alert id="alert"></Alert>
       </b-row>
-      <b-row>
+      <b-row align-v="center">
         <router-view id="router"></router-view>
       </b-row>
     </b-container>
