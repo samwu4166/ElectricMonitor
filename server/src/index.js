@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
@@ -6,7 +7,7 @@ var apiRouter = require('./api/apis');
 var moment = require('moment');
 import {logger} from './api/controllers/logger/log';
 var app = express();
-var port = 8080;
+var port = parseInt(process.env.SERVER_PORT);
 //remove limit of listener handler
 require('events').EventEmitter.defaultMaxListeners = 0;
 //swap jade for ejs etc
