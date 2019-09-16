@@ -1,7 +1,7 @@
 
-# frontend
-
-## Project setup
+# app_project
+# Project setup
+## FrontEnd
 ```
 npm install
 ```
@@ -15,24 +15,13 @@ npm run serve
 ```
 npm run build
 ```
-
-### Run your tests
+### serve with dist
 ```
-npm run test
+serve -s dist
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
 =======
-# app_project
 
-## server side
-
-1. run npm start under server folder
-2. run redis-server
-3. run docker linsql(mssql)
+## BackEnd
+1. run redis-server(docker)
+2. run linsql(docker)
+3. run npm start under server folder
