@@ -25,6 +25,10 @@ npm run test
 ```
 npm run lint
 ```
+### serve with dist
+```
+serve -s dist
+```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
