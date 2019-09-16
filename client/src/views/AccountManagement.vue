@@ -90,27 +90,27 @@ export default{
         onRowSelected(items){
             this.selected = items
         },
-        suspendAccount(){
-            this.selected.forEach(user => {
+        async suspendAccount(){
+            for(var user of this.selected){
                 if(user.status == 1){
                     var data = {}
                     data.account = user.account
                     data.payload = {"status": 0}
-                    this.$store.dispatch('suspendUser', data)
+                    await this.$store.dispatch('suspendUser', data)
                 }
-            })
+            }
             this.getUserList()
 
         },
-        unsuspendAccount(){
-            this.selected.forEach(user => {
+        async unsuspendAccount(){
+            for(var user of this.selected){
                 if(user.status == 0){
                     var data = {}
                     data.account = user.account
                     data.payload = {"status": 1}
-                    this.$store.dispatch('suspendUser', data)
+                    await this.$store.dispatch('suspendUser', data)
                 }
-            })
+            }
             this.getUserList()
         }
     }
