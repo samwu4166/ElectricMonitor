@@ -2,7 +2,7 @@ let axios = require('axios');
 import store from './store'
 
 const axiosInstance = axios.create({
-    baseURL: 'http://140.115.54.57:8080/api/v1',
+    baseURL: 'http://140.115.54.57:8012/api/v1',
     params: {},
     timeout: 10000
     //http://172.20.10.2:8080/api/v1
@@ -59,5 +59,3 @@ export const apiPatchClient = (token, data) => {
     axiosInstance.defaults.headers.common['authorization'] = token;
     return axiosInstance.patch(`/user/${data.account}`, data.payload);
 }
-
-
