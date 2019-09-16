@@ -36,7 +36,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 # app_project
 
 ## server side
-
-1. run npm start under server folder
-2. run redis-server
-3. run docker linsql(mssql)
+1. run redis-server(docker)
+2. run linsql(docker)
+3. run npm start under server folder
