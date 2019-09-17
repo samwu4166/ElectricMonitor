@@ -20,6 +20,12 @@ npm run build
 serve -s dist
 ```
 =======
+## Docker ( frontend )
+```
+docker build . -t my-app
+docker run -d -p 8080:80 my-app
+```
+=======
 
 ## BackEnd
 1. run redis-server(docker)
