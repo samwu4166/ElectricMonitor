@@ -1,6 +1,6 @@
 <template>
     <div class="register pt-5">
-        <b-form action="#"  @submit.prevent="register">
+        <b-form action="#"  @submit.prevent="register" class="w-100">
             <b-container fluid>
                 <b-row class="mb-2 justify-content-center" no-gutters>
                     <b-col  col cols="10" xl="3" lg="4" md="5" sm="6">

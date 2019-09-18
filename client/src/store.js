@@ -11,7 +11,7 @@ export default new Vuex.Store({
     data: null,
     historyData: null,
     timeout: 0,
-    expireTimeout: null,
+    expireTimeout: 0,
     //login info session
     user:{
       username: null,

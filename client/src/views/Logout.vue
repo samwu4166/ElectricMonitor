@@ -12,7 +12,17 @@ export default {
         })
     },
     beforeDestroy() {
-        this.$store.getters.expireTimeout && clearTimeout(this.$store.getters.expireTimeout)
+        this.expireTimeout && clearTimeout(this.expireTimeout)
+    },
+    computed: {
+        expireTimeout: {
+            get(){
+                return this.$store.state.expireTimeout;
+            },
+            set(val){
+                this.$store.commit('SET_EXPIRETIMEOUT', val);
+            }
+        }
     }
 }
 </script>
