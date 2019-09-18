@@ -1,7 +1,7 @@
 module.exports = {
     // 部署应用包时的基本 URL
     publicPath: process.env.NODE_ENV === 'production'
-      ? '//140.115.54.57:5000'
+      ? '//140.115.54.57:8080'
       : '/',
 
     // 运行 vue-cli-service build 时生成的生产环境构建文件的目录
