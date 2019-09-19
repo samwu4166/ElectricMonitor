@@ -1,9 +1,17 @@
-FROM node:10
-COPY ./ /app
-WORKDIR /app
-RUN npm install && npm run build
+FROM node:lts-alpine
 
-FROM nginx
-RUN mkdir /app
-COPY --from=0 /app/dist /app
-COPY nginx.conf /etc/nginx/nginx.conf
+RUN npm install -g http-server
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 8080
+
+CMD ["http-server","dist"]
