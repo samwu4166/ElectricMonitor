@@ -47,7 +47,7 @@ export const apiLogout = token => {
 //backend generate key
 export const apiUserRegisterKeyGeneration = (token, permission) => {
     axiosInstance.defaults.headers.common['authorization'] = token;
-    return axiosInstance.post(`/token/${permission}`);
+    return axiosInstance.post('/token', {id:permission});
 }
 //get all users account below current account permission
 export const apiGetClients = token => {

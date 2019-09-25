@@ -36,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   else if (to.matched.some(record => record.meta.requiresPermission)) {
-    if (store.getters.getPermission !== "0") {
+    if (store.getters.getPermission == "2") {
       next({
         path: '/home'
       })

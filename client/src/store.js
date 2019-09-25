@@ -50,7 +50,7 @@ export default new Vuex.Store({
       return state.user.access_token !== null;
     },
     expireTimeoutExist(state) {
-      return state.expireTimeout !== null;
+      return state.expireTimeout !== 0 && state.expireTimeout !== null;
     },
     getAccessToken(state){
       return state.user.access_token;
