@@ -83,7 +83,7 @@ api_router.use(/^(?!\/auth).*$/, (req, res, next) => {
                         res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this(point)',error_code:2}})
                         return
                       }
-                      else if(url.match(/token/g) && !url.match(/extends/g) && _auth!=0 ){
+                      else if(url.match(/token/g) && !url.match(/extends/g) && _auth>1 ){
                         console.log("back permission return")
                         res.status(400).json({status:"bad request",data:{message:'this account has no permission to do this(token)',error_code:2}})
                         return
