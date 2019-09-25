@@ -11,7 +11,7 @@
                 <b-navbar-nav id="management" v-if="loggedIn && (permission === '1' || permission === '0')">
                     <b-nav-item @click="onAccountManagementClick">帳號管理</b-nav-item>
                 </b-navbar-nav>
-                <b-navbar-nav id="management" v-if="loggedIn && permission==='0'">
+                <b-navbar-nav id="management" v-if="loggedIn && (permission === '1' || permission === '0')">
                     <b-nav-item @click="onManagementClick">後台</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav v-if="!loggedIn" class="ml-auto">

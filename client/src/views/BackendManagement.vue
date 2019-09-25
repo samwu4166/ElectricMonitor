@@ -13,11 +13,6 @@ import KeyGeneration from "../components/Key_generation.vue"
 export default{
     components:{
         KeyGeneration
-    },
-    data(){
-        return {
-            text: "AAAAAA"
-        }
     }
 }
 </script>

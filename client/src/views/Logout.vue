@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { clearTimeout } from 'timers';
 export default {
     created(){
         this.$store.dispatch('destroyAccessToken')
@@ -12,7 +11,8 @@ export default {
         })
     },
     beforeDestroy() {
-        this.expireTimeout && clearTimeout(this.expireTimeout)
+        this.expireTimeout && window.clearTimeout(this.expireTimeout)
+        this.$store.commit('SET_EXPIRETIMEOUT', 0);
     },
     computed: {
         expireTimeout: {
@@ -20,7 +20,7 @@ export default {
                 return this.$store.state.expireTimeout;
             },
             set(val){
-                this.$store.commit('SET_EXPIRETIMEOUT', val);
+                return this.$store.commit('SET_EXPIRETIMEOUT', val);
             }
         }
     }

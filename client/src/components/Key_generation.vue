@@ -7,7 +7,7 @@
             <b-input-group class="mr-2 mt-2">
                 <b-form-input disabled v-model="key"></b-form-input>
                 <b-input-group-append>
-                    <b-button v-clipboard="() => key">COPY</b-button>
+                    <b-button :disabled="key == null" v-clipboard="() => key">COPY</b-button>
                 </b-input-group-append>
             </b-input-group>
         </b-form>
@@ -18,7 +18,7 @@ export default{
     data(){
         return {
             permission: null,
-            options: [{text: "permission", value: null}, 0, 1, 2],
+            options: this.$store.getters.getPermission == 0 ? [{text: "permission", value: null}, 0, 1, 2] : [{text: "permission", value: null}, 1, 2],
             key: null
         }
     },

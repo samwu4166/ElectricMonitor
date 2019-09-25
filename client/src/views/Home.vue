@@ -52,7 +52,7 @@ export default {
       //this.data.msg.data.foreach
       this.data?this.data.forEach(da => {
         var d = new Date(da.datetime.split('Z')[0])
-        da.datetime = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
+        da.datetime = d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds()
         this.chartdata.push(da)
       }):(null)
 
