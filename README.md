@@ -43,3 +43,8 @@ docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \
 docker exec -it sql "bash"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "<YourStrong!Password>"
 ```
+### install node process manager
+```
+npm i pm2 -g
+```
+tutorial : https://larrylu.blog/nodejs-pm2-cluster-455ffbd7671
