@@ -48,3 +48,14 @@ docker exec -it sql "bash"
 npm i pm2 -g
 ```
 tutorial : https://larrylu.blog/nodejs-pm2-cluster-455ffbd7671
+
+## pm2 to start server
+cd into server directory and type
+```
+pm2 start dist
+```
+## pm2 to start client
+cd into client directory and type
+```
+pm2 start client.js
+```
