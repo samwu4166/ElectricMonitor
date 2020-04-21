@@ -1,7 +1,10 @@
 
 # ElecticMonitor
 ## Introduction
-This is a project to monitor electric system via mobile phone and build with Vue.js and Express.js, function include client login, logout, limit user to login single account, Jwt token, RESTAPI.  
+This is a project to monitor electric system via mobile phone and build with Vue.js and Express.js, function include client login, logout, limit user to login single account, show data point with interactive charts.
+## Skills
+Front-End: Vue.js, chart.js, jwt, Webpack
+Back-End: Express.js, jwt, RestAPI, MySQL, Redis, Docker, Nginx, Pm2
 # Project setup
 ## FrontEnd
 ```
