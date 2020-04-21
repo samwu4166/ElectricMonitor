@@ -1,5 +1,7 @@
 
-# app_project
+# ElecticMonitor
+## Introduction
+This is a project to monitor electric system via mobile phone and build with Vue.js and Express.js, function include client login, logout, limit user to login single account, Jwt token, RESTAPI.  
 # Project setup
 ## FrontEnd
 ```
